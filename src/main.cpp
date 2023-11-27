@@ -1,9 +1,9 @@
-//#include "engine/GameEngine.h"
-
+#include <iostream>
 #include "engine/GameEngine.h"
 
-GameEngine* game = GameEngine::getInstance();
+GameEngine* engine = GameEngine::getInstance();
 
 int main() {
-    game->Start();
+    engine->Start(1280, 720, "CA3");
+    return 0;
 }

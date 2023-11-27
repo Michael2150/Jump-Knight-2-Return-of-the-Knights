@@ -7,24 +7,25 @@
 
 #include "vector"
 #include "../components/Component.h"
+#include "SFML/System/Vector2.hpp"
 #include <memory>
 #include <string>
 
 class Entity {
 private:
     std::vector<std::shared_ptr<Component>> components;
-    std::vector<std::shared_ptr<Entity>> children;
 
 public:
+    sf::Vector2f position;
+    sf::Vector2f scale;
+    float rotation;
+
     void Start();
     void Update(float deltaTime);
     void Render();
 
     void AddComponent(std::shared_ptr<Component> component);
-    void AddChild(std::shared_ptr<Entity> child);
-
     std::vector<std::shared_ptr<Component>> GetComponents();
-    std::vector<std::shared_ptr<Entity>> GetChildren();
 };
 
 

@@ -1,14 +1,49 @@
-//
-// Created by micha on 26/11/2023.
-//
-
 #include <iostream>
 #include "GameEngine.h"
 
 GameEngine* GameEngine::instance = nullptr;
 
 GameEngine::GameEngine() {
-    std::cout << "GameEngine created" << std::endl;
+    auto Ball = new Entity();
+
+}
+
+void GameEngine::Start(int width, int height, std::string title) {
+    std::cout << "Starting game engine..." << std::endl;
+    std::cout << "Width: " << width << std::endl;
+    std::cout << "Height: " << height << std::endl;
+    std::cout << "Title: " << title << std::endl;
+
+    this->window = new sf::RenderWindow(sf::VideoMode(width, height), title);
+    auto timer = sf::Clock();
+
+    // Start all the entities and components here:
+    for (auto &component : GetComponents()) {
+        component->Start();
+    }
+
+    while (window->isOpen()) {
+        sf::Event event{};
+        while (window->pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window->close();
+            }
+        }
+
+        // Update all the entities and components here
+        for (auto &component : GetComponents()) {
+            component->Update(timer.restart().asSeconds());
+        }
+
+        window->clear(sf::Color::Black);
+
+        // Render all the entities and components here
+        for (auto &component : GetComponents()) {
+            component->Render();
+        }
+
+        window->display();
+    }
 }
 
 GameEngine *GameEngine::getInstance() {
@@ -16,4 +51,9 @@ GameEngine *GameEngine::getInstance() {
         instance = new GameEngine();
     }
     return instance;
+}
+
+sf::Vector2<float> GameEngine::getScreenSize() {
+    return {static_cast<float>(window->getSize().x),
+            static_cast<float>(window->getSize().y)};
 }
