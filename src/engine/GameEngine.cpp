@@ -1,5 +1,6 @@
 #include <iostream>
 #include "GameEngine.h"
+#include "PhysicsEngine.h"
 
 GameEngine* GameEngine::instance = nullptr;
 
@@ -16,13 +17,19 @@ void GameEngine::Start(int width, int height, std::string title) {
     this->window = new sf::RenderWindow(sf::VideoMode({static_cast<unsigned int>(width),
                                                        static_cast<unsigned int>(height)}), title);
     auto timer = sf::Clock();
+    auto physics = PhysicsEngine::getInstance();
 
     // Start all the entities and components here:
     for (auto &entity : entities) {
         entity->Start();
     }
 
+    auto delta_time = timer.restart().asSeconds();
+    std::cout << "Game started up in " << delta_time << " seconds." << std::endl;
+
     while (window->isOpen()) {
+        delta_time = timer.restart().asSeconds();
+
         sf::Event event{};
         while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -32,7 +39,7 @@ void GameEngine::Start(int width, int height, std::string title) {
 
         // Update all the entities and components here
         for (auto &entity : entities) {
-            entity->Update(timer.restart().asSeconds());
+            entity->Update(delta_time);
         }
 
         window->clear(sf::Color::Black);
