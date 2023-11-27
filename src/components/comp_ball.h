@@ -14,15 +14,11 @@
 class comp_ball : public Component{
 public:
     b2Body* body;
-    sf::CircleShape shape = sf::CircleShape(0.0f);
 
     comp_ball(float x, float y, float radius) {
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(x, y);
-
-        shape.setRadius(radius);
-        shape.setFillColor(sf::Color::Red);
 
         body = GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
 
@@ -42,13 +38,10 @@ public:
     }
 
     void Update(float deltaTime) override {
-        b2Vec2 position = body->GetPosition();
-        shape.setPosition({position.x, position.y});
         Component::Update(deltaTime);
     }
 
     void Render() override {
-        GameEngine::getInstance()->getWindow().draw(shape);
         Component::Render();
     }
 };

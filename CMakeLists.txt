@@ -5,10 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 #### Add External Dependencies ####
 # SFML - graphics library
-add_subdirectory("lib/sfml" EXCLUDE_FROM_ALL)
-include_directories("lib/sfml/include")
-set(SFML_INCS "lib/sfml/include")
-link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
+include(FetchContent)
+FetchContent_Declare(SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 2.6.x)
+FetchContent_MakeAvailable(SFML)
 
 # B2D - Box2D phyics library
 add_subdirectory("lib/b2d/Box2D")
@@ -24,7 +25,6 @@ add_executable(CA3 src/main.cpp
         src/engine/GameEngine.cpp
         src/engine/GameEngine.h
         src/components/comp_ball.h
-        src/components/comp_physics_renderer.h
 )
 
 target_link_libraries(CA3 PRIVATE sfml-graphics sfml-audio sfml-window sfml-system Box2D)

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <iomanip>
 #include "GameEngine.h"
 #include "../components/comp_ball.h"
 
@@ -14,7 +15,9 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
     world = new b2World(b2Vec2(0.0f, 9.81f));
 
     auto ball = std::make_shared<Entity>();
-    ball->AddComponent(std::make_shared<comp_ball>(100.0f, 100.0f, 50.0f));
+    auto ball_component = std::make_shared<comp_ball>(100.0f, 100.0f, 50.0f);
+    ball->AddComponent(ball_component);
+
     entities.push_back(ball);
 
     std::cout << "Game engine initialized!" << std::endl;
@@ -31,7 +34,8 @@ void GameEngine::Start() {
     }
 
     auto delta_time = timer.restart().asSeconds();
-    std::cout << "Game started up in " << delta_time << " seconds." << std::endl;
+
+    std::cout << "Game started up in " << std::fixed << std::setprecision(6) << delta_time << " seconds." << std::endl;
 
     while (window->isOpen()) {
         delta_time = timer.restart().asSeconds();
