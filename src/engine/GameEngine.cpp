@@ -5,7 +5,6 @@ GameEngine* GameEngine::instance = nullptr;
 
 GameEngine::GameEngine() {
     auto Ball = new Entity();
-
 }
 
 void GameEngine::Start(int width, int height, std::string title) {
@@ -14,12 +13,13 @@ void GameEngine::Start(int width, int height, std::string title) {
     std::cout << "Height: " << height << std::endl;
     std::cout << "Title: " << title << std::endl;
 
-    this->window = new sf::RenderWindow(sf::VideoMode(width, height), title);
+    this->window = new sf::RenderWindow(sf::VideoMode({static_cast<unsigned int>(width),
+                                                       static_cast<unsigned int>(height)}), title);
     auto timer = sf::Clock();
 
     // Start all the entities and components here:
-    for (auto &component : GetComponents()) {
-        component->Start();
+    for (auto &entity : entities) {
+        entity->Start();
     }
 
     while (window->isOpen()) {
@@ -31,15 +31,15 @@ void GameEngine::Start(int width, int height, std::string title) {
         }
 
         // Update all the entities and components here
-        for (auto &component : GetComponents()) {
-            component->Update(timer.restart().asSeconds());
+        for (auto &entity : entities) {
+            entity->Update(timer.restart().asSeconds());
         }
 
         window->clear(sf::Color::Black);
 
         // Render all the entities and components here
-        for (auto &component : GetComponents()) {
-            component->Render();
+        for (auto &entity : entities) {
+            entity->Render();
         }
 
         window->display();
