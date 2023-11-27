@@ -4,6 +4,7 @@
 GameEngine* engine = GameEngine::getInstance();
 
 int main() {
-    engine->Start(1280, 720, "CA3");
+    engine->Initialize(1280, 720, "CA3");
+    engine->Start();
     return 0;
 }

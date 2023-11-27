@@ -6,20 +6,23 @@
 #define CA3_GAMEENGINE_H
 
 #include "../entities/Entity.h"
+#include "Box2D/Dynamics/b2World.h"
 #include <SFML/Graphics.hpp>
 
 class GameEngine {
 private:
-    GameEngine();
-    sf::RenderWindow* window {};
-    std::vector<std::shared_ptr<Entity>> entities;
     static GameEngine* instance;
-
+    sf::RenderWindow* window;
+    std::vector<std::shared_ptr<Entity>> entities;
+    b2World* world;
 public:
-    GameEngine(GameEngine const&) = delete;
-    void Start(int width, int height, std::string title);
     static GameEngine* getInstance();
-    sf::Vector2<float> getScreenSize();
+
+    void Initialize(int width, int height, const std::string& title);
+    void Start();
+
+    b2World& getWorld() { return *world; }
+    sf::RenderWindow& getWindow() { return *window; }
 };
 
 #endif //CA3_GAMEENGINE_H

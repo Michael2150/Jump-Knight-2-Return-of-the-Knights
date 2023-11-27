@@ -1,23 +1,29 @@
 #include <iostream>
+#include <memory>
 #include "GameEngine.h"
-#include "PhysicsEngine.h"
+#include "../components/comp_ball.h"
 
 GameEngine* GameEngine::instance = nullptr;
 
-GameEngine::GameEngine() {
-    auto Ball = new Entity();
-}
-
-void GameEngine::Start(int width, int height, std::string title) {
-    std::cout << "Starting game engine..." << std::endl;
-    std::cout << "Width: " << width << std::endl;
-    std::cout << "Height: " << height << std::endl;
-    std::cout << "Title: " << title << std::endl;
+void GameEngine::Initialize(int width, int height, const std::string &title) {
+    std::cout << "Initializing game engine..." << std::endl;
 
     this->window = new sf::RenderWindow(sf::VideoMode({static_cast<unsigned int>(width),
                                                        static_cast<unsigned int>(height)}), title);
+
+    world = new b2World(b2Vec2(0.0f, 9.81f));
+
+    auto ball = std::make_shared<Entity>();
+    ball->AddComponent(std::make_shared<comp_ball>(100.0f, 100.0f, 50.0f));
+    entities.push_back(ball);
+
+    std::cout << "Game engine initialized!" << std::endl;
+}
+
+void GameEngine::Start() {
+    std::cout << "Starting game engine..." << std::endl;
+
     auto timer = sf::Clock();
-    auto physics = PhysicsEngine::getInstance();
 
     // Start all the entities and components here:
     for (auto &entity : entities) {
@@ -44,6 +50,8 @@ void GameEngine::Start(int width, int height, std::string title) {
 
         window->clear(sf::Color::Black);
 
+        world->Step(1.0f / 60.0f, 8, 3);
+
         // Render all the entities and components here
         for (auto &entity : entities) {
             entity->Render();
@@ -58,9 +66,4 @@ GameEngine *GameEngine::getInstance() {
         instance = new GameEngine();
     }
     return instance;
-}
-
-sf::Vector2<float> GameEngine::getScreenSize() {
-    return {static_cast<float>(window->getSize().x),
-            static_cast<float>(window->getSize().y)};
 }

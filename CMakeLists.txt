@@ -23,8 +23,8 @@ add_executable(CA3 src/main.cpp
         src/entities/Entity.h
         src/engine/GameEngine.cpp
         src/engine/GameEngine.h
-        src/engine/PhysicsEngine.h
-        src/engine/PhysicsEngine.cpp
+        src/components/comp_ball.h
+        src/components/comp_physics_renderer.h
 )
 
 target_link_libraries(CA3 PRIVATE sfml-graphics sfml-audio sfml-window sfml-system Box2D)
