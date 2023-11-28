@@ -13,9 +13,17 @@ private:
     sf::Vector2f position;
     float rotation;
     sf::Vector2f scale;
+
 public:
-    Transform_Component() : position(sf::Vector2f(0, 0)), rotation(0), scale(sf::Vector2f(1, 1)) {}
-    Transform_Component(sf::Vector2f position, float rotation, sf::Vector2f scale) : position(position), rotation(rotation), scale(scale) {}
+    explicit Transform_Component() :
+        position(sf::Vector2f(0, 0)),
+        rotation(0),
+        scale(sf::Vector2f(1, 1)) {}
+
+    Transform_Component(sf::Vector2f position, float rotation, sf::Vector2f scale) :
+        position(position),
+        rotation(rotation),
+        scale(scale) {}
 
     sf::Vector2f getPosition() { return position; }
     void setPosition(sf::Vector2f position) { this->position = position; }

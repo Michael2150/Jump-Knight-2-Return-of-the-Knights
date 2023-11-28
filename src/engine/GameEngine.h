@@ -9,12 +9,16 @@
 #include "Box2D/Dynamics/b2World.h"
 #include <SFML/Graphics.hpp>
 
+using namespace std;
+using namespace sf;
+
 class GameEngine {
 private:
     static GameEngine* instance;
-    sf::RenderWindow* window;
-    std::vector<std::shared_ptr<Entity>> entities;
+    RenderWindow* window;
+    vector<shared_ptr<Entity>> entities;
     b2World* world;
+
 public:
     static GameEngine* getInstance();
 
@@ -22,7 +26,6 @@ public:
     void Start();
 
     b2World& getWorld() { return *world; }
-    sf::RenderWindow& getWindow() { return *window; }
 };
 
 #endif //CA3_GAMEENGINE_H

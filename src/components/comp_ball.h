@@ -41,8 +41,8 @@ public:
         Component::Update(deltaTime);
     }
 
-    void Render() override {
-        Component::Render();
+    void Render(sf::RenderWindow* window) override {
+        Component::Render(window);
     }
 };
 

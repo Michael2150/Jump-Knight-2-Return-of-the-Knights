@@ -7,8 +7,11 @@
 
 #include "Component.h"
 #include "../entities/Entity.h"
+#include "SFML/Graphics/RenderWindow.hpp"
 
 class Entity; // Forward declaration
+
+using namespace std;
 
 class Component {
 protected:
@@ -16,10 +19,11 @@ protected:
     Entity* parent;
 
 public:
-    explicit Component() : parent(nullptr) {}
+    explicit Component() : parent(nullptr) {};
     virtual void Start() {};
     virtual void Update(float deltaTime) {};
-    virtual void Render() {};
+    virtual void Render(sf::RenderWindow* window) {};
+    void setParent(Entity* parent) { this->parent = parent; }
 };
 
 

@@ -4,24 +4,26 @@
 
 #include "Entity.h"
 
+using namespace std;
+
 void Entity::Start() {
-    for (auto &component : components) {
+    for (const auto& component : components) {
         component->Start();
     }
 }
 
 void Entity::Update(float deltaTime) {
-    for (auto &component : components) {
+    for (const auto& component : components) {
         component->Update(deltaTime);
     }
 }
 
-void Entity::Render() {
-    for (auto &component : components) {
-        component->Render();
+void Entity::Render(sf::RenderWindow* window) {
+    for (const auto& component : components) {
+        component->Render(window);
     }
 }
 
-void Entity::AddComponent(Component &component) {
-    components.push_back(&component);
+void Entity::AddComponent(const shared_ptr<Component>& component) {
+    components.push_back(component);
 }

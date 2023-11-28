@@ -13,21 +13,28 @@
 #include "Entity.h"
 #include "../components/Component.h"
 #include "../components/Transform.h"
+#include "SFML/Graphics/RenderWindow.hpp"
 
 class Component; // Forward declaration
+
+using namespace std;
 
 class Entity {
 private:
     Transform_Component transform;
-    std::vector<Component*> components;
+    vector<shared_ptr<Component>> components;
 
 public:
+    explicit Entity() : transform(Transform_Component()) {
+        components = vector<shared_ptr<Component>>();
+    };
+
     void Start();
     void Update(float deltaTime);
-    void Render();
+    void Render(sf::RenderWindow* window);
 
-    void AddComponent(Component& component);
-    std::vector<Component*> getComponents() { return components; }
+    void AddComponent(const shared_ptr<Component>& component);
+    std::vector<shared_ptr<Component>> getComponents() { return components; }
 
     Transform_Component& getTransform() { return transform; }
 };
