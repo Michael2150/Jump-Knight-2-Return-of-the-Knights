@@ -26,6 +26,8 @@ public:
     void Start();
 
     b2World& getWorld() { return *world; }
+    RenderWindow& getWindow() { return *window; }
+    Vector2i getScreenSize() { return {static_cast<int>(window->getSize().x), static_cast<int>(window->getSize().y)}; }
 };
 
 #endif //CA3_GAMEENGINE_H

@@ -14,7 +14,7 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
                                                        static_cast<unsigned int>(height)}), title);
 
     // Create the game physics world
-    world = new b2World(b2Vec2(0.0f, 0.1f));
+    world = new b2World(b2Vec2(0.0f, 9.8f));
 
     std::cout << "Game engine initialized!" << std::endl;
 }
@@ -22,8 +22,11 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
 void GameEngine::Start() {
     std::cout << "Starting game engine..." << std::endl;
 
-    auto ball = std::make_shared<BallEntity>();
-    entities.push_back(ball);
+    // Create 50 balls
+    for (int i = 0; i < 50; i++){
+        auto ball = std::make_shared<BallEntity>();
+        entities.push_back(ball);
+    }
 
     auto timer = sf::Clock();
 
