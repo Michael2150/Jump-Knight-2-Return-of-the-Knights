@@ -28,7 +28,7 @@ public:
 
         // Set initial velocity in a random direction with a fixed magnitude
         float angle = static_cast<float>(rand() % 360); // Random angle in degrees
-        float magnitude = 10.0f; // Adjust as needed
+        float magnitude = 500.f; // Adjust as needed
         initialVelocity = b2Vec2(magnitude * std::cos(angle * b2_pi / 180.0f),
                                  magnitude * std::sin(angle * b2_pi / 180.0f));
 

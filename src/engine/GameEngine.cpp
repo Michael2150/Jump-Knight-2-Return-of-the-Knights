@@ -3,6 +3,7 @@
 #include <iomanip>
 #include "GameEngine.h"
 #include "../template/Ball.cpp"
+#include "../template/FPS_Counter.cpp"
 
 GameEngine* GameEngine::instance = nullptr;
 
@@ -13,14 +14,20 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
     this->window = new sf::RenderWindow(sf::VideoMode({static_cast<unsigned int>(width),
                                                        static_cast<unsigned int>(height)}), title);
 
+    auto fps = 60;
+    this->window->setFramerateLimit(fps);
+
     // Create the game physics world
     world = new b2World(b2Vec2(0.0f, 9.8f));
 
-    std::cout << "Game engine initialized!" << std::endl;
+    std::cout << "Game engine initialized! Physics interval: " << std::fixed << std::setprecision(6) << physics_engine_steps_interval << " seconds at " << fps << " FPS. = " << physics_engine_steps_interval * fps << " physics steps per second." << std::endl;
 }
 
 void GameEngine::Start() {
     std::cout << "Starting game engine..." << std::endl;
+
+    auto fps_counter = std::make_shared<FPSCounter>();
+    entities.push_back(fps_counter);
 
     // Create 50 balls
     for (int i = 0; i < 50; i++){
@@ -56,7 +63,7 @@ void GameEngine::Start() {
 
         window->clear(sf::Color::Black);
 
-        world->Step(1.0f / 60.0f, 8, 3);
+        world->Step(delta_time, 8, 3);
 
         // Render all the entities and components here
         for (const auto& entity : entities) {

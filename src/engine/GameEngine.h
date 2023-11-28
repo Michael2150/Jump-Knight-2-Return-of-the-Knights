@@ -14,6 +14,7 @@ using namespace sf;
 
 class GameEngine {
 private:
+    double physics_engine_steps_interval = 0.f; // Gets set in GameEngine::Initialize based on the desired FPS (e.g. 0.016 for 60 FPS)
     static GameEngine* instance;
     RenderWindow* window;
     vector<shared_ptr<Entity>> entities;
