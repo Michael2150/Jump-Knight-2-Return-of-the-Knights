@@ -25,5 +25,6 @@ void Entity::Render(sf::RenderWindow* window) {
 }
 
 void Entity::AddComponent(const shared_ptr<Component>& component) {
+    component->setParent(this);
     components.push_back(component);
 }

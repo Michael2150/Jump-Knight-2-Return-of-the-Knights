@@ -19,8 +19,7 @@ link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
 # Add the source files to the executable recursively
 file(GLOB SOURCES "src/*.cpp" "src/**/*.cpp")
-add_executable(CA3 ${SOURCES}
-        src/components/comp_physics_renderer.h)
+add_executable(CA3 ${SOURCES})
 
 target_link_libraries(CA3 PRIVATE sfml-graphics sfml-audio sfml-window sfml-system Box2D)
 target_compile_features(CA3 PRIVATE cxx_std_17)

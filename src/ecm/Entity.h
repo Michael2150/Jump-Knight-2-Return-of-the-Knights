@@ -11,8 +11,8 @@
 #include "SFML/System/Vector2.hpp"
 
 #include "Entity.h"
-#include "../components/Component.h"
-#include "../components/Transform.h"
+#include "Component.h"
+#include "Transform.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
 class Component; // Forward declaration
@@ -29,9 +29,9 @@ public:
         components = vector<shared_ptr<Component>>();
     };
 
-    void Start();
-    void Update(float deltaTime);
-    void Render(sf::RenderWindow* window);
+    virtual void Start();
+    virtual void Update(float deltaTime);
+    virtual void Render(sf::RenderWindow* window);
 
     void AddComponent(const shared_ptr<Component>& component);
     std::vector<shared_ptr<Component>> getComponents() { return components; }

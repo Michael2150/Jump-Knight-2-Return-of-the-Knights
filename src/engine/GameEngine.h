@@ -5,7 +5,7 @@
 #ifndef CA3_GAMEENGINE_H
 #define CA3_GAMEENGINE_H
 
-#include "../entities/Entity.h"
+#include "../ecm/Entity.h"
 #include "Box2D/Dynamics/b2World.h"
 #include <SFML/Graphics.hpp>
 

@@ -6,7 +6,7 @@
 #define CA3_COMPONENT_H
 
 #include "Component.h"
-#include "../entities/Entity.h"
+#include "Entity.h"
 #include "SFML/Graphics/RenderWindow.hpp"
 
 class Entity; // Forward declaration
