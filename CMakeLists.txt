@@ -17,15 +17,9 @@ include_directories("lib/b2d/Box2D/")
 set(B2D_INCS "lib/b2d/Box2D/")
 link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 
-add_executable(CA3 src/main.cpp
-        src/components/Component.cpp
-        src/components/Component.h
-        src/entities/Entity.cpp
-        src/entities/Entity.h
-        src/engine/GameEngine.cpp
-        src/engine/GameEngine.h
-        src/components/comp_ball.h
-)
+# Add the source files to the executable recursively
+file(GLOB SOURCES "src/*.cpp" "src/**/*.cpp")
+add_executable(CA3 ${SOURCES})
 
 target_link_libraries(CA3 PRIVATE sfml-graphics sfml-audio sfml-window sfml-system Box2D)
 target_compile_features(CA3 PRIVATE cxx_std_17)

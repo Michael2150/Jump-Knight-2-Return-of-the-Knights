@@ -6,26 +6,30 @@
 #define CA3_ENTITY_H
 
 #include "vector"
-#include "../components/Component.h"
-#include "SFML/System/Vector2.hpp"
 #include <memory>
 #include <string>
+#include "SFML/System/Vector2.hpp"
+
+#include "Entity.h"
+#include "../components/Component.h"
+#include "../components/Transform.h"
+
+class Component; // Forward declaration
 
 class Entity {
 private:
-    std::vector<std::shared_ptr<Component>> components;
+    Transform_Component transform;
+    std::vector<Component*> components;
 
 public:
-    sf::Vector2f position;
-    sf::Vector2f scale;
-    float rotation;
-
     void Start();
     void Update(float deltaTime);
     void Render();
 
-    void AddComponent(std::shared_ptr<Component> component);
-    std::vector<std::shared_ptr<Component>> GetComponents();
+    void AddComponent(Component& component);
+    std::vector<Component*> getComponents() { return components; }
+
+    Transform_Component& getTransform() { return transform; }
 };
 
 

@@ -9,16 +9,16 @@ GameEngine* GameEngine::instance = nullptr;
 void GameEngine::Initialize(int width, int height, const std::string &title) {
     std::cout << "Initializing game engine..." << std::endl;
 
+    // Create the game window
     this->window = new sf::RenderWindow(sf::VideoMode({static_cast<unsigned int>(width),
                                                        static_cast<unsigned int>(height)}), title);
 
+    // Create the game physics world
     world = new b2World(b2Vec2(0.0f, 9.81f));
 
-    auto ball = std::make_shared<Entity>();
-    auto ball_component = std::make_shared<comp_ball>(100.0f, 100.0f, 50.0f);
-    ball->AddComponent(ball_component);
+    // Create the game entities:
 
-    entities.push_back(ball);
+    auto ball = Entity();
 
     std::cout << "Game engine initialized!" << std::endl;
 }

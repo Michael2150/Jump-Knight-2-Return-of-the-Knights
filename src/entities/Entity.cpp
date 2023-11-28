@@ -22,10 +22,6 @@ void Entity::Render() {
     }
 }
 
-void Entity::AddComponent(std::shared_ptr<Component> component) {
-    components.push_back(component);
-}
-
-std::vector<std::shared_ptr<Component>> Entity::GetComponents() {
-    return components;
+void Entity::AddComponent(Component &component) {
+    components.push_back(&component);
 }
