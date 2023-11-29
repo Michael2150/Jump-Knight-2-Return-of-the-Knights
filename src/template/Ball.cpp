@@ -14,26 +14,20 @@ class BallPhysicsComponent : public Component {
 private:
     b2Body* body {};
     b2BodyDef bodyDef;
-    b2Vec2 initialVelocity; // Store initial velocity
 
 public:
     void Start() override {
         Component::Start();
 
+        float rand_x = static_cast<float>(rand() % GameEngine::getInstance()->getScreenSize().x);
+        float rand_y = static_cast<float>(rand() % GameEngine::getInstance()->getScreenSize().y);
+        parent->getTransform().setPosition({rand_x, rand_y});
+
         // Set up the physics body
-        bodyDef.type = b2_kinematicBody;  // Kinematic body for controlled motion
-        auto pos = parent->getTransform().getPosition();
-        bodyDef.position.Set(pos.x, pos.y);
+        bodyDef.type = b2_dynamicBody;  // Kinematic body for controlled motion
+        bodyDef.position.Set(parent->getTransform().getPosition().x, parent->getTransform().getPosition().y);
         body = GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
 
-        // Set initial velocity in a random direction with a fixed magnitude
-        float angle = static_cast<float>(rand() % 360); // Random angle in degrees
-        float magnitude = 500.f; // Adjust as needed
-        initialVelocity = b2Vec2(magnitude * std::cos(angle * b2_pi / 180.0f),
-                                 magnitude * std::sin(angle * b2_pi / 180.0f));
-
-        // Apply initial velocity
-        body->SetLinearVelocity(initialVelocity);
     }
 
     void Update(float deltaTime) override {
@@ -42,21 +36,6 @@ public:
         // Update the position of the entity based on the kinematic body
         auto pos = body->GetPosition();
         parent->getTransform().setPosition({pos.x, pos.y});
-
-        // Check if the ball touches the screen edges and make it bounce
-        auto screenSize = GameEngine::getInstance()->getScreenSize();
-        if (pos.x < 0 || pos.x > screenSize.x || pos.y < 0 || pos.y > screenSize.y) {
-            // Reverse the velocity component perpendicular to the edge
-            if (pos.x < 0 || pos.x > screenSize.x) {
-                initialVelocity.x *= -1;
-            }
-            if (pos.y < 0 || pos.y > screenSize.y) {
-                initialVelocity.y *= -1;
-            }
-
-            // Apply the updated velocity
-            body->SetLinearVelocity(initialVelocity);
-        }
     }
 };
 
@@ -74,7 +53,8 @@ public:
 
         // Set up the visual representation of the entity
         shape = sf::CircleShape(radius);
-        shape.setFillColor(sf::Color::Red);
+        auto randomColor = sf::Color(rand() % 255, rand() % 255, rand() % 255);
+        shape.setFillColor(randomColor);
         shape.setOrigin(radius, radius);
     }
 

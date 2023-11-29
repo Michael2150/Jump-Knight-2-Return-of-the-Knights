@@ -4,7 +4,7 @@
 GameEngine* engine = GameEngine::getInstance();
 
 int main() {
-    engine->Initialize(1280, 720, "CA3");
+    engine->Initialize(1280, 720, "CA3 Tower Defense");
     engine->Start();
     return 0;
 }

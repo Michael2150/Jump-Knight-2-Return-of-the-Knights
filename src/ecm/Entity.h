@@ -21,8 +21,10 @@ using namespace std;
 
 class Entity {
 private:
-    Transform_Component transform;
     vector<shared_ptr<Component>> components;
+
+protected:
+    Transform_Component transform;
 
 public:
     explicit Entity() : transform(Transform_Component()) {
