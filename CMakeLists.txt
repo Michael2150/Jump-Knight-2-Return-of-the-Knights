@@ -20,8 +20,12 @@ link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 # Add the source files to the executable recursively
 file(GLOB SOURCES "src/*.cpp" "src/**/*.cpp")
 add_executable(CA3 ${SOURCES}
-        src/template/FPS_Counter.cpp
         src/template/Obstacle.cpp
+        src/scenes/Scene.cpp
+        src/scenes/Scene.h
+        src/game/Game.cpp
+        src/game/Game.h
+        src/components/text_component.h
 )
 
 # add a JSON library

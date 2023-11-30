@@ -20,7 +20,7 @@ public:
         // Set up the physics body
         bodyDef.type = b2_staticBody;  // Kinematic body for controlled motion
         bodyDef.position.Set(parent->getTransform().getPosition().x, parent->getTransform().getPosition().y);
-        body = GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
+//        body = GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
 
         b2PolygonShape boxShape;
         boxShape.SetAsBox(transform.getScale().x, transform.getScale().y);
@@ -34,7 +34,7 @@ public:
         body->CreateFixture(&fixtureDef);
 
         // Add the physics body to the world
-        GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
+//        GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
     }
 };
 

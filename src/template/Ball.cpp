@@ -26,7 +26,7 @@ public:
         // Set up the physics body
         bodyDef.type = b2_dynamicBody;  // Kinematic body for controlled motion
         bodyDef.position.Set(parent->getTransform().getPosition().x, parent->getTransform().getPosition().y);
-        body = GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
+//        body = GameEngine::getInstance()->getWorld().CreateBody(&bodyDef);
 
     }
 

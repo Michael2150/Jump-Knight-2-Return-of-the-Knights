@@ -3,52 +3,34 @@
 #include <iomanip>
 #include "GameEngine.h"
 #include "../template/Ball.cpp"
-#include "../template/FPS_Counter.cpp"
-#include "../template/Obstacle.cpp"
+#include "../game/Game.h"
 
 GameEngine* GameEngine::instance = nullptr;
 
 void GameEngine::Initialize(int width, int height, const std::string &title) {
-    std::cout << "Initializing game engine..." << std::endl;
+    auto timer = sf::Clock();
 
-    // Create fullscreen the game window
     this->window = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default);
+    this->window->setFramerateLimit(60);
 
-    auto fps = 60;
-    this->window->setFramerateLimit(fps);
+    // Create the scenes here:
+    CreateScene<MenuScene>(); // Scene [0]
+    CreateScene<Level1>(); // Scene [1]
+    CreateScene<Level2>(); // Scene [2]
+    CreateScene<Level3>(); // Scene [3]
+    CreateScene<EndScene>(); // Scene [4]
 
-    // Create the game physics world
-    world = new b2World(b2Vec2(0.0f, -9.8f));
-
-    std::cout << "Game engine initialized! Physics interval: " << std::fixed << std::setprecision(6) << physics_engine_steps_interval << " seconds at " << fps << " FPS. = " << physics_engine_steps_interval * fps << " physics steps per second." << std::endl;
+    cout << "Game engine initialized in " << std::fixed << std::setprecision(6) << timer.restart().asSeconds() << " seconds." << endl;
 }
 
 void GameEngine::Start() {
     std::cout << "Starting game engine..." << std::endl;
 
-    auto fps_counter = std::make_shared<FPSCounter>();
-    entities.push_back(fps_counter);
-
-    // Create 50 balls
-    for (int i = 0; i < 100; i++){
-        auto ball = std::make_shared<BallEntity>();
-        entities.push_back(ball);
-    }
-
-    auto floor = std::make_shared<ObstacleEntity>(IntRect(100, 100, 1280, 10));
-    entities.push_back(floor);
-
     auto timer = sf::Clock();
 
-    // Start all the entities and components here:
-    for (const auto& entity : entities) {
-        entity->Start();
-    }
+    SetActiveScene(0); // Menu scene
 
-    auto delta_time = timer.restart().asSeconds();
-
-    std::cout << "Game started up in " << std::fixed << std::setprecision(6) << delta_time << " seconds." << std::endl;
-
+    auto delta_time = 0.f;
     while (window->isOpen()) {
         delta_time = timer.restart().asSeconds();
 
@@ -62,29 +44,30 @@ void GameEngine::Start() {
                 if (event.key.code == sf::Keyboard::Escape) {
                     window->close();
                 }
-            }
 
-            // Space bar down
-            if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Space) {
-                    delta_time *= 5;
+                if (event.key.code == sf::Keyboard::Num1) {
+                    SetActiveScene(0);
+                }
+                if (event.key.code == sf::Keyboard::Num2) {
+                    SetActiveScene(1);
+                }
+                if (event.key.code == sf::Keyboard::Num3) {
+                    SetActiveScene(2);
+                }
+                if (event.key.code == sf::Keyboard::Num4) {
+                    SetActiveScene(3);
+                }
+                if (event.key.code == sf::Keyboard::Num5) {
+                    SetActiveScene(4);
                 }
             }
         }
 
-        // Update all the entities and components here
-        for (const auto& entity : entities) {
-            entity->Update(delta_time);
-        }
+        current_scene->Update(delta_time);
 
         window->clear(sf::Color::Black);
 
-        world->Step(delta_time, 8, 3);
-
-        // Render all the entities and components here
-        for (const auto& entity : entities) {
-            entity->Render(window);
-        }
+        current_scene->Render(window);
 
         window->display();
     }
