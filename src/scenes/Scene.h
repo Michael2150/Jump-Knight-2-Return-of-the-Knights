@@ -7,14 +7,15 @@
 
 #include "../ecm/Entity.h"
 #include "Box2D/Dynamics/b2World.h"
+#include "../engine/PhysicsEngine.h"
 
 //class Entity; // Forward declaration
 
 class Scene : public Entity {
 private:
     vector<shared_ptr<Entity>> entities;
-    b2World* world;
     bool b_started = false;
+    shared_ptr<b2World> world;
 
 public:
     explicit Scene();
@@ -29,9 +30,14 @@ public:
 
     void Render(sf::RenderWindow *window) override;
 
-    b2World* getWorld() { return world; }
+    b2World* getWorld() {
+        if (world == nullptr) {
+            world = PhysicsEngine::CreateWorld();
+        }
+        return world.get();
+    }
 
-    bool HasStarted() { return b_started; }
+    bool HasStarted() const { return b_started; }
 
     template <class T, typename... Args>
     shared_ptr<T> CreateEntity(Args&&... args) {

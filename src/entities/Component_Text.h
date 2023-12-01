@@ -2,20 +2,24 @@
 // Created by micha on 30/11/2023.
 //
 
-#ifndef CA3_TEXT_COMPONENT_H
-#define CA3_TEXT_COMPONENT_H
+#ifndef CA3_COMPONENT_TEXT_H
+#define CA3_COMPONENT_TEXT_H
 
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 #include "../ecm/Component.h"
 
 using namespace std;
 using namespace sf;
 
-class TextComponent : public Component {
+class Component_Text : public Component {
 private:
     Font font;
     Text text;
 public:
+    explicit Component_Text(string Text) {
+        text.setString(Text);
+    }
+
     void Start() override {
         Component::Start();
 
@@ -57,4 +61,4 @@ public:
     }
 };
 
-#endif //CA3_TEXT_COMPONENT_H
+#endif //CA3_COMPONENT_TEXT_H

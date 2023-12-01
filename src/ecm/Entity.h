@@ -35,7 +35,15 @@ public:
     virtual void Update(float deltaTime);
     virtual void Render(sf::RenderWindow* window);
 
-    void AddComponent(const shared_ptr<Component>& component);
+    template <class T, typename... Args>
+    shared_ptr<T> CreateComponent(Args&&... args) {
+        static_assert(std::is_base_of<Component, T>::value, "T must be of type Component or derived from Component");
+
+        shared_ptr<T> component = make_shared<T>(std::forward<Args>(args)...);
+        component->setParent(this);
+        components.push_back(component);
+        return component;
+    }
     std::vector<shared_ptr<Component>> getComponents() { return components; }
 
     Transform_Component& getTransform() { return transform; }

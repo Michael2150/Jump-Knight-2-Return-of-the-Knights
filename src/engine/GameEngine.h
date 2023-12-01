@@ -18,6 +18,7 @@ private:
     RenderWindow* window;
     vector<shared_ptr<Scene>> scenes;
     Scene* current_scene;
+    string title;
 
 public:
     explicit GameEngine() {

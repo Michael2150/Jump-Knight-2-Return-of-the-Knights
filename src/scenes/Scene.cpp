@@ -3,10 +3,11 @@
 //
 
 #include "Scene.h"
+#include "../engine/PhysicsEngine.h"
 
 Scene::Scene() {
-    world = new b2World(b2Vec2(0.f, 9.8f));
     entities = vector<shared_ptr<Entity>>();
+    world = PhysicsEngine::CreateWorld();
 }
 
 void Scene::Start() {
@@ -23,6 +24,8 @@ void Scene::Update(float deltaTime) {
     for (const auto& entity : entities) {
         entity->Update(deltaTime);
     }
+
+    PhysicsEngine::Update(world.get());
 
     Entity::Update(deltaTime);
 }

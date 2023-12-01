@@ -2,7 +2,6 @@
 #include <memory>
 #include <iomanip>
 #include "GameEngine.h"
-#include "../template/Ball.cpp"
 #include "../game/Game.h"
 
 GameEngine* GameEngine::instance = nullptr;
@@ -10,7 +9,8 @@ GameEngine* GameEngine::instance = nullptr;
 void GameEngine::Initialize(int width, int height, const std::string &title) {
     auto timer = sf::Clock();
 
-    this->window = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Default);
+    this->title = title;
+    this->window = new sf::RenderWindow(sf::VideoMode(width, height), this->title, sf::Style::Default);
     this->window->setFramerateLimit(60);
 
     // Create the scenes here:
@@ -70,6 +70,8 @@ void GameEngine::Start() {
         current_scene->Render(window);
 
         window->display();
+
+        window->setTitle(this->title + " | FPS: " + std::to_string(1.f / delta_time));
     }
 }
 
