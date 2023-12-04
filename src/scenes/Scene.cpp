@@ -25,7 +25,7 @@ void Scene::Update(float deltaTime) {
         entity->Update(deltaTime);
     }
 
-    PhysicsEngine::Update(world.get());
+    PhysicsEngine::Update(world.get(), deltaTime);
 
     Entity::Update(deltaTime);
 }

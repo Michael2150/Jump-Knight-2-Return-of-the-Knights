@@ -19,6 +19,8 @@
 class Component_BallPhysics : public Component_Physics {
 private:
     b2World* world;
+    Vector2f velocity = {0.0f, 0.0f};
+    Vector2f acceleration = {0.0f, 0.f};
 
 public:
     explicit Component_BallPhysics(Entity* parent, b2World* world) : world(world) {
@@ -26,7 +28,7 @@ public:
 
         // Create the ball
         b2BodyDef ballBodyDef;
-        ballBodyDef.type = b2_dynamicBody;
+        ballBodyDef.type = b2_kinematicBody;
         ballBodyDef.position.Set(parent->getTransform().getPosition().x, parent->getTransform().getPosition().y);
         this->body = world->CreateBody(&ballBodyDef);
 
@@ -38,10 +40,19 @@ public:
         ballFixtureDef.density = 1.0f;
         ballFixtureDef.friction = 0.3f;
         this->body->CreateFixture(&ballFixtureDef);
+
+        // Set the ball's velocity
+        this->body->SetLinearVelocity({0.0f, 0.0f});
     }
 
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
+
+        // Apply acceleration to velocity
+        velocity += acceleration * deltaTime;
+        body->SetLinearVelocity({velocity.x, velocity.y});
+
+        // Update the position of the entity
         parent->getTransform().setPosition({this->body->GetPosition().x, this->body->GetPosition().y});
     }
 };
@@ -62,7 +73,6 @@ public:
 
         auto physics = CreateComponent<Component_BallPhysics>(this, world);
         shape = new sf::CircleShape(20.0f);
-        shape->setOrigin(20.0f, 20.0f);
         shape->setFillColor(sf::Color::Red);
         auto renderer = CreateComponent<Component_PhysicsShapeRenderer>(physics.get(), shape);
 

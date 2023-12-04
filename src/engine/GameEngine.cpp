@@ -60,6 +60,15 @@ void GameEngine::Start() {
                 if (event.key.code == sf::Keyboard::Num5) {
                     SetActiveScene(4);
                 }
+
+                // if plus key is pressed, increase the gravity
+                if (event.key.code == sf::Keyboard::Equal) {
+                    current_scene->getWorld()->SetGravity({0.0f, current_scene->getWorld()->GetGravity().y + 100.0f});
+                }
+                // if minus key is pressed, decrease the gravity
+                if (event.key.code == sf::Keyboard::Dash) {
+                    current_scene->getWorld()->SetGravity({0.0f, current_scene->getWorld()->GetGravity().y - 100.0f});
+                }
             }
         }
 

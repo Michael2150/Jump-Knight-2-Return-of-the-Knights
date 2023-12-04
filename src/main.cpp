@@ -1,4 +1,3 @@
-#include <iostream>
 #include "engine/GameEngine.h"
 
 GameEngine* engine = GameEngine::getInstance();

@@ -8,6 +8,7 @@
 #include "../scenes/Scene.h"
 #include "Box2D/Dynamics/b2World.h"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 using namespace std;
 using namespace sf;
@@ -19,12 +20,17 @@ private:
     vector<shared_ptr<Scene>> scenes;
     Scene* current_scene;
     string title;
+    Font font;
 
 public:
     explicit GameEngine() {
         window = nullptr;
         current_scene = nullptr;
         scenes = vector<shared_ptr<Scene>>();
+
+        if (!font.loadFromFile("resources/fonts/arial.ttf")) {
+            cout << "Failed to load font" << endl;
+        }
     }
 
     static GameEngine* getInstance();
@@ -52,6 +58,8 @@ public:
         scenes.push_back(scene);
         scene->Initialize();
     }
+
+    Font& getFont() { return font; }
 };
 
 #endif //CA3_GAMEENGINE_H
