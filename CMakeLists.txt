@@ -20,7 +20,12 @@ link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 # Add the source files to the executable recursively
 file(GLOB SOURCES "src/*.cpp" "src/**/*.cpp")
 add_executable(CA3 ${SOURCES}
-        src/entities/Entity_Ball.h)
+        src/entities/Entity_Ball.h
+        src/level_system/LevelMap.cpp
+        src/level_system/LevelMap.h
+        src/level_system/Tileset.cpp
+        src/level_system/Tileset.h
+)
 
 # add a JSON library
 FetchContent_Declare(json
@@ -28,6 +33,9 @@ FetchContent_Declare(json
         GIT_TAG v3.11.3
 )
 FetchContent_MakeAvailable(json)
+
+# Delete the resources folder in the build directory
+file(REMOVE_RECURSE ${CMAKE_BINARY_DIR}/resources)
 
 # Copy the resources folder to the build directory
 file(COPY "resources" DESTINATION ${CMAKE_BINARY_DIR})
