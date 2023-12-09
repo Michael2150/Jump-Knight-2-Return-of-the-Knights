@@ -9,20 +9,21 @@
 #include <map>
 #include <vector>
 #include "../ecm/Entity.h"
+#include "TileSet.h"
 
 using std::string;
 
-class LevelMap: public Entity{
+class LevelMap: public Entity {
 private:
     string levelMapPath;
-
-    // Stores the layer name, and the tile ids for each tile in the layer
-    std::map<string, std::vector<std::vector<int>>> levelMap;
+    std::map<string, TileSet> layers;
 
 public:
-    explicit LevelMap(string levelMapPath);
+    explicit LevelMap(string levelMapPath, const TileSet& sourceTileSet);
 
     void Render(sf::RenderWindow *window) override;
+
+    TileSet getLayer(string layerName);
 };
 
 

@@ -3,13 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "cavesofgallet_tiles.tsx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "cavesofgallet_tiles.tsx": {
-            "dynamicWrapping": true,
+            "dynamicWrapping": false,
             "scaleInDock": 4,
             "scaleInEditor": 4
         },
@@ -52,13 +52,14 @@
     "map.tileHeight": 8,
     "map.tileWidth": 8,
     "openFiles": [
+        "cavesofgallet_tiles.tsx"
     ],
     "project": "ca3-tiled-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "cavesofgallet_tiles.tsx",
         "main_menu.json",
         "level_1_map.json",
-        "cavesofgallet_tiles.tsx",
         "level_1_map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",

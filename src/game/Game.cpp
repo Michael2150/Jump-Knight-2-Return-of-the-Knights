@@ -2,16 +2,15 @@
 #include "../entities/Component_Text.h"
 #include "../entities/hello_world_component.h"
 #include "../level_system/LevelMap.h"
-#include "../level_system/Tileset.h"
 #include "../entities/PlayerController.h"
+#include "../level_system/TileSet.h"
 
 void MenuScene::Initialize() {
     auto TitleText = CreateEntity<Entity>();
     auto textComponent = TitleText->CreateComponent<Component_Text>("Menu Scene");
 
-    auto tileset = std::make_shared<Tileset>("resources/environment/tileset.png");
+    auto tileset = CreateEntity<TileSet>("resources/environment/tileset.png", sf::Vector2u(8, 8), sf::Vector2u(8, 12));
 
-    auto Level = LevelMap("resources/tiled/level_1_map.json");
 }
 
 void Level1::Initialize() {

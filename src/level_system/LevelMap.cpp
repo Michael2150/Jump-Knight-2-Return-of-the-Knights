@@ -7,19 +7,17 @@
 #include <utility>
 #include <fstream>
 #include "SFML/Graphics/Texture.hpp"
-#include "SFML/Graphics/Sprite.hpp"
 #include "nlohmann/json.hpp"
 
 using json = nlohmann::json;
 
-LevelMap::LevelMap(string levelMapPath) {
+LevelMap::LevelMap(string levelMapPath, const TileSet& sourceTileSet) {
     this->levelMapPath = std::move(levelMapPath);
 
     // Read in the file as a json object
     std::ifstream i(this->levelMapPath);
     string str((std::istreambuf_iterator<char>(i)), std::istreambuf_iterator<char>());
     json j = json::parse(str);
-
 
     // Get the layers from the json object
     auto layers = j["layers"];
@@ -60,11 +58,10 @@ LevelMap::LevelMap(string levelMapPath) {
         }
 
         // Add the layer name and the vector of tile ids to the map
-        this->levelMap.insert(std::pair<string, std::vector<std::vector<int>>>(layerName, tileIds));
+        this->layers.insert(std::pair<string, TileSet>(layerName, TileSet(tileIds, sourceTileSet)));
     }
 }
 
 void LevelMap::Render(sf::RenderWindow *window) {
     Entity::Render(window);
-
 }
