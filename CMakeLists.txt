@@ -25,6 +25,7 @@ add_executable(CA3 ${SOURCES}
         src/level_system/LevelMap.h
         src/level_system/Tileset.cpp
         src/level_system/Tileset.h
+        src/entities/PlayerController.h
 )
 
 # add a JSON library

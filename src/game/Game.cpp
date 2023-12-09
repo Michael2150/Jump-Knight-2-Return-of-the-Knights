@@ -4,6 +4,7 @@
 #include "../entities/hello_world_component.h"
 #include "../level_system/LevelMap.h"
 #include "../level_system/Tileset.h"
+#include "../entities/PlayerController.h"
 
 void MenuScene::Initialize() {
     auto TitleText = CreateEntity<Entity>();
@@ -20,6 +21,9 @@ void Level1::Initialize() {
 
     auto hello = CreateEntity<Entity>();
     hello->CreateComponent<hello_world_component>(this->getWorld());
+
+    auto player = CreateEntity<Entity>();
+    player->CreateComponent<PlayerController>(this->getWorld());
 }
 
 void Level2::Initialize() {
