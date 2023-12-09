@@ -18,6 +18,10 @@ private:
     sf::Shape* shape;
 
 public:
+    //***
+    // Component_PhysicsShapeRenderer
+    // Constructor
+    // @param physics - the physics component the shape is attached to
     explicit Component_PhysicsShapeRenderer(Component_Physics* physics, sf::Shape* shape) {
         this->physics = physics;
         this->shape = shape;

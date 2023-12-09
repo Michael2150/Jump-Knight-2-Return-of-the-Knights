@@ -17,11 +17,7 @@ class PlayerController : public Component_Physics {
 
 private:
     b2World* world;
-    Vector2f velocity = {0.0f, 0.0f};
-    Vector2f acceleration = {0.0f, 0.f};
     sf::RectangleShape playerShape;
-public:
-
 
 public:
     explicit PlayerController(b2World* world) : world(world) {  }
@@ -29,24 +25,23 @@ public:
     void Start() override {
         Component::Start();
 
-        auto screenSize = GameEngine::getInstance()->getScreenSize();
+        auto playerSize = Vector2f(50.0f, 50.0f);
+        auto playerPhysicsSize = PhysicsEngine::GraphicsToPhysics(playerSize);
 
         // Create the player
         b2BodyDef playerBodyDef;
         playerBodyDef.type = b2_dynamicBody;
-        auto playerPosition = Vector2f(screenSize.x * 0.6f, screenSize.y * 0.3f);
-        auto physicsPosition = PhysicsEngine::GraphicsToPhysics(playerPosition);
+        auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform().getPosition());
         playerBodyDef.position.Set(physicsPosition.x, physicsPosition.y);
         this->body = world->CreateBody(&playerBodyDef);
 
         // Create the player fixture
         b2PolygonShape playerBox;
-        auto playerSize = Vector2f(50.0f, 50.0f);
-        playerBox.SetAsBox(PhysicsEngine::GraphicsToPhysics(playerSize.x), PhysicsEngine::GraphicsToPhysics(playerSize.y));
+        playerBox.SetAsBox(playerPhysicsSize.x * 0.5f, playerPhysicsSize.y * 0.5f);
         b2FixtureDef playerFixtureDef;
         playerFixtureDef.shape = &playerBox;
         playerFixtureDef.density = 1.0f;
-        playerFixtureDef.friction = 0.3f;
+        playerFixtureDef.friction = 1.f;
         this->body->CreateFixture(&playerFixtureDef);
 
         // Create the player shape
@@ -55,34 +50,39 @@ public:
         playerShape.setFillColor(sf::Color::Blue);
     }
 
-    void Render(sf::RenderWindow *window) override {
-        Component::Render(window);
-
-        window->draw(playerShape);
-    }
-
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
         HandleInput();
 
-        playerShape.setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
-        playerShape.setRotation(body->GetAngle() * 180.0f / b2_pi);
+        parent->getTransform().setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
 
+        playerShape.setPosition(parent->getTransform().getPosition());
+        playerShape.setRotation(body->GetAngle() * 180.0f / b2_pi);
+    }
+
+    void Render(sf::RenderWindow *window) override {
+        Component::Render(window);
+        window->draw(playerShape);
     }
 
     void HandleInput(){
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-        acceleration.x = -10.0f;
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        acceleration.x = 10.0f;
-    } else {
-        acceleration.x = 0.0f;
-    }
+        auto velocity = body->GetLinearVelocity();
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && body->GetLinearVelocity().y == 0){
-        body->ApplyLinearImpulseToCenter(b2Vec2(0.0, -100.0f), true);
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+            velocity.x = PhysicsEngine::GraphicsToPhysics(-150.0f);
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            velocity.x = PhysicsEngine::GraphicsToPhysics(150.0f);
+        } else {
+            velocity.x = 0.0f;
+        }
+
+        body->SetLinearVelocity(velocity);
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && body->GetLinearVelocity().y > -0.001f && body->GetLinearVelocity().y < 0.001f){
+            auto jumpForce = PhysicsEngine::GraphicsToPhysics(Vector2f(0.0f, -50.0f));
+            body->ApplyLinearImpulse(jumpForce, body->GetWorldCenter(), true);
+        }
     }
-}
 
 };
 

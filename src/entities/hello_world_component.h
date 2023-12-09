@@ -90,7 +90,7 @@ public:
 
         // Add a contact listener to the world
         auto listener = new bounce_listener();
-        world->SetContactListener(listener);
+        //world->SetContactListener(listener);
 
         // Create the ball shape
         ballShape.setRadius(radius);

@@ -23,6 +23,7 @@ void Level1::Initialize() {
     hello->CreateComponent<hello_world_component>(this->getWorld());
 
     auto player = CreateEntity<Entity>();
+    player->getTransform().setPosition({100.0f, 100.0f});
     player->CreateComponent<PlayerController>(this->getWorld());
 }
 
