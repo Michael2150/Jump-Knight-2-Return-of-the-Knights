@@ -12,7 +12,7 @@
 
 using json = nlohmann::json;
 
-LevelMap::LevelMap(string levelMapPath, ) {
+LevelMap::LevelMap(string levelMapPath) {
     this->levelMapPath = std::move(levelMapPath);
 
     // Read in the file as a json object

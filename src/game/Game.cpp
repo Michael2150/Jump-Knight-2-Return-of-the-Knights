@@ -9,7 +9,7 @@ void MenuScene::Initialize() {
     auto TitleText = CreateEntity<Entity>();
     auto textComponent = TitleText->CreateComponent<Component_Text>("Menu Scene");
 
-    auto tileset = std::make_shared<Tileset>("resources/tiled/tileset.png");
+    auto tileset = std::make_shared<Tileset>("resources/environment/tileset.png");
 
     auto Level = LevelMap("resources/tiled/level_1_map.json");
 }
