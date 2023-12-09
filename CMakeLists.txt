@@ -20,7 +20,6 @@ link_directories("${CMAKE_BINARY_DIR}/lib/sfml/lib")
 # Add the source files to the executable recursively
 file(GLOB SOURCES "src/*.cpp" "src/**/*.cpp")
 add_executable(CA3 ${SOURCES}
-        src/entities/Entity_Ball.h
         src/level_system/LevelMap.cpp
         src/level_system/LevelMap.h
         src/level_system/Tileset.cpp

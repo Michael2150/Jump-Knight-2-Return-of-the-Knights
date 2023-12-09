@@ -11,13 +11,11 @@
 #include "Component_Physics.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
-#include "Component_PhysicsShapeRenderer.h"
 
 class PlayerController : public Component_Physics {
 
 private:
     b2World* world;
-    sf::RectangleShape playerShape;
 
 public:
     explicit PlayerController(b2World* world) : world(world) {  }
@@ -44,10 +42,6 @@ public:
         playerFixtureDef.friction = 1.f;
         this->body->CreateFixture(&playerFixtureDef);
 
-        // Create the player shape
-        playerShape = sf::RectangleShape(playerSize);
-        playerShape.setOrigin(playerSize * 0.5f);
-        playerShape.setFillColor(sf::Color::Blue);
     }
 
     void Update(float deltaTime) override {
@@ -55,14 +49,6 @@ public:
         HandleInput();
 
         parent->getTransform().setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
-
-        playerShape.setPosition(parent->getTransform().getPosition());
-        playerShape.setRotation(body->GetAngle() * 180.0f / b2_pi);
-    }
-
-    void Render(sf::RenderWindow *window) override {
-        Component::Render(window);
-        window->draw(playerShape);
     }
 
     void HandleInput(){
@@ -78,7 +64,8 @@ public:
 
         body->SetLinearVelocity(velocity);
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && body->GetLinearVelocity().y > -0.001f && body->GetLinearVelocity().y < 0.001f){
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
+            body->GetLinearVelocity().y > -0.001f && body->GetLinearVelocity().y < 0.001f){
             auto jumpForce = PhysicsEngine::GraphicsToPhysics(Vector2f(0.0f, -50.0f));
             body->ApplyLinearImpulse(jumpForce, body->GetWorldCenter(), true);
         }

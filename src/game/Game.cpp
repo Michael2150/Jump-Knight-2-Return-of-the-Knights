@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "../entities/Component_Text.h"
-#include "../entities/Entity_Ball.h"
 #include "../entities/hello_world_component.h"
 #include "../level_system/LevelMap.h"
 #include "../level_system/Tileset.h"
@@ -22,9 +21,11 @@ void Level1::Initialize() {
     auto hello = CreateEntity<Entity>();
     hello->CreateComponent<hello_world_component>(this->getWorld());
 
+    // Create the player and set its position
     auto player = CreateEntity<Entity>();
     player->getTransform().setPosition({100.0f, 100.0f});
-    player->CreateComponent<PlayerController>(this->getWorld());
+
+    auto cntrl = player->CreateComponent<PlayerController>(this->getWorld());
 }
 
 void Level2::Initialize() {

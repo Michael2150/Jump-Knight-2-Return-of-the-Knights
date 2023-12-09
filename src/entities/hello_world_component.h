@@ -10,6 +10,7 @@
 #include "Box2D/Collision/Shapes/b2CircleShape.h"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
+#include "../engine/GameEngine.h"
 
 
 class bounce_listener : public b2ContactListener {
