@@ -11,19 +11,23 @@
 #include "Component_Physics.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
+#include "Animator_Player_cmp.h"
 
 class PlayerController : public Component_Physics {
 
 private:
     b2World* world;
+    Animator_Player_cmp* animator;
+    float speed = 300.0f;
 
 public:
     explicit PlayerController(b2World* world) : world(world) {  }
 
+
     void Start() override {
         Component::Start();
 
-        auto playerSize = Vector2f(50.0f, 50.0f);
+        auto playerSize = Vector2f(parent->getTransform().getScale().x * 27.0f, parent->getTransform().getScale().y * 40.0f);
         auto playerPhysicsSize = PhysicsEngine::GraphicsToPhysics(playerSize);
 
         // Create the player
@@ -42,6 +46,7 @@ public:
         playerFixtureDef.friction = 1.f;
         this->body->CreateFixture(&playerFixtureDef);
 
+        animator = parent->getComponent<Animator_Player_cmp>().get();
     }
 
     void Update(float deltaTime) override {
@@ -54,20 +59,34 @@ public:
     void HandleInput(){
         auto velocity = body->GetLinearVelocity();
 
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            velocity.x = PhysicsEngine::GraphicsToPhysics(-150.0f);
+            velocity.x = PhysicsEngine::GraphicsToPhysics(-speed);
+            animator->SetAnimation(Animator_Player_cmp::animation_state::run);
+            animator->setFlip(true);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-            velocity.x = PhysicsEngine::GraphicsToPhysics(150.0f);
+            velocity.x = PhysicsEngine::GraphicsToPhysics(speed);
+            animator->SetAnimation(Animator_Player_cmp::animation_state::run);
+            animator->setFlip(false);
         } else {
             velocity.x = 0.0f;
+            animator->SetAnimation(Animator_Player_cmp::animation_state::idle);
         }
 
         body->SetLinearVelocity(velocity);
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
             body->GetLinearVelocity().y > -0.001f && body->GetLinearVelocity().y < 0.001f){
-            auto jumpForce = PhysicsEngine::GraphicsToPhysics(Vector2f(0.0f, -50.0f));
+            auto jumpForce = PhysicsEngine::GraphicsToPhysics(Vector2f(0.0f, -parent->getTransform().getScale().y * 50.0f));
             body->ApplyLinearImpulse(jumpForce, body->GetWorldCenter(), true);
+        }
+
+        if(body->GetLinearVelocity().y > 0.001f){
+            animator->SetAnimation(Animator_Player_cmp::animation_state::fall);
+        }
+
+        if(body->GetLinearVelocity().y < -0.001f){
+            animator->SetAnimation(Animator_Player_cmp::animation_state::jump);
         }
     }
 

@@ -46,6 +46,18 @@ public:
     }
     std::vector<shared_ptr<Component>> getComponents() { return components; }
 
+    template <class T>
+    shared_ptr<T> getComponent() {
+        static_assert(std::is_base_of<Component, T>::value, "T must be of type Component or derived from Component");
+
+        for (auto component : components) {
+            if (dynamic_pointer_cast<T>(component)) {
+                return dynamic_pointer_cast<T>(component);
+            }
+        }
+        return nullptr;
+    }
+
     Transform_Component& getTransform() { return transform; }
 };
 

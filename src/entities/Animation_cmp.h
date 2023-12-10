@@ -28,9 +28,6 @@ public:
         this->frame_count = frame_count;
         this->loop = loop;
         this->current_frame = 0;
-        frame_size = sf::Vector2i(10, 10);
-        speed = 1;
-        frame_offset = 0;
 
         texture = new sf::Texture();
         if(!texture->loadFromFile(file_name)){
@@ -41,9 +38,10 @@ public:
         sprite = new sf::Sprite();
         sprite->setTexture(*texture);
 
+
         this->frames = new sf::IntRect[frame_count];
         for(int i = 0; i < frame_count; i++){
-            frames[i] = sf::IntRect(i*frame_size.x + i*frame_offset, 0, frame_size.x, frame_size.y);
+                frames[i] = sf::IntRect(i*frame_size.x + i*frame_offset, 0, frame_size.x, frame_size.y);
         }
 
         sprite->setTextureRect(frames[0]);
@@ -81,6 +79,10 @@ public:
 
     sf::Sprite& getSprite(){
         return *sprite;
+    }
+
+    void setPos(sf::Vector2f pos){
+        sprite->setPosition(pos);
     }
 };
 
