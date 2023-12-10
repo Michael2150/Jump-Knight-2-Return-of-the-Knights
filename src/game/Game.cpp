@@ -4,6 +4,7 @@
 #include "../level_system/LevelMap.h"
 #include "../level_system/Tileset.h"
 #include "../entities/PlayerController.h"
+#include "../entities/Animation_cmp.h"
 
 void MenuScene::Initialize() {
     auto TitleText = CreateEntity<Entity>();
@@ -23,9 +24,8 @@ void Level1::Initialize() {
 
     // Create the player and set its position
     auto player = CreateEntity<Entity>();
-    player->getTransform().setPosition({100.0f, 100.0f});
-
-    auto cntrl = player->CreateComponent<PlayerController>(this->getWorld());
+    player->CreateComponent<PlayerController>(this->getWorld());
+//    player->CreateComponent<Animation_cmp>()
 }
 
 void Level2::Initialize() {
