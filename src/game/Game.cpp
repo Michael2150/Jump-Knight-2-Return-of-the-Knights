@@ -10,7 +10,8 @@ void MenuScene::Initialize() {
     auto textComponent = TitleText->CreateComponent<Component_Text>("Menu Scene");
 
     auto tileset = CreateEntity<TileSet>("resources/environment/tileset.png", sf::Vector2u(8, 8), sf::Vector2u(8, 12));
-
+    tileset->shouldRender = false;
+    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_1_map.json", *tileset);
 }
 
 void Level1::Initialize() {

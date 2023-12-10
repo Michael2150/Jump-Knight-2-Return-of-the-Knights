@@ -29,10 +29,16 @@ TileSet::TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf:
     }
 }
 
-TileSet::TileSet(const std::vector <std::vector<int>>& tileIds, const TileSet& sourdceTileSet) {
-    this->texture = sourdceTileSet.texture;
+TileSet::TileSet(const std::vector <std::vector<int>>& tileIds, TileSet& sourceTileSet) {
+    this->texture = sourceTileSet.texture;
 
-    this->tiles = std::vector<sf::Sprite>();
+    // Set the scale so that all the tiles fit the width of the window, but keep the aspect ratio
+    auto windowSize = GameEngine::getInstance()->getScreenSize();
+    int gridWith = tileIds[0].size();
+    int tileWidth = sourceTileSet.tiles[0].getTextureRect().width;
+    this->scale = (float) windowSize.x / (float) (gridWith * tileWidth);
+
+    parseTileIds(tileIds, sourceTileSet);
 }
 
 void TileSet::Render(sf::RenderWindow *window) {
@@ -43,4 +49,85 @@ void TileSet::Render(sf::RenderWindow *window) {
     for (auto &tile : this->tiles) {
         window->draw(tile);
     }
+}
+
+void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, TileSet& sourceTileSet) {
+    // Bits on the far end of the 32-bit global tile ID are used for tile flags
+    const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
+    const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
+    const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
+
+    // Loop through each row
+    for (int row = 0; row < tileIds.size(); row++) {
+        // Loop through each column
+        for (int column = 0; column < tileIds[row].size(); column++) {
+            // Get the tile id
+            int tileId = tileIds[row][column];
+
+            // Check if the tile is flipped horizontally
+            bool flippedHorizontally = (tileId & FLIPPED_HORIZONTALLY_FLAG) != 0;
+
+            // Check if the tile is flipped vertically
+            bool flippedVertically = (tileId & FLIPPED_VERTICALLY_FLAG) != 0;
+
+            // Check if the tile is flipped diagonally
+            bool flippedDiagonally = (tileId & FLIPPED_DIAGONALLY_FLAG) != 0;
+
+            // Remove the flags from the tile id
+            tileId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG );
+
+            // Get the tile sprite
+            sf::Sprite tile = sourceTileSet.getTile(tileId);
+
+            // Set the scale of the tile
+            tile.setScale(this->scale, this->scale);
+
+            // Set the origin to the center of the tile
+            tile.setOrigin(tile.getLocalBounds().width / 2, tile.getLocalBounds().height / 2);
+
+            auto tileScale = tile.getScale();
+
+            if (flippedHorizontally) {
+                // Flip the tile horizontally
+                tile.setScale(-tileScale.x, tileScale.y);
+            }
+
+            tileScale = tile.getScale();
+
+            if (flippedVertically) {
+                // Flip the tile vertically
+                tile.setScale(tileScale.x, -tileScale.y);
+            }
+
+            tileScale = tile.getScale();
+
+            if (flippedDiagonally) {
+                // Flip the tile horizontally and rotate it 90 degrees
+                tile.setScale(-tileScale.x, tileScale.y);
+                tile.rotate(90);
+            }
+
+            // Set the position of the tile
+            tile.setPosition(column * tile.getGlobalBounds().width + tile.getGlobalBounds().width / 2,
+                             row * tile.getGlobalBounds().height + tile.getGlobalBounds().height / 2);
+
+            // Add the tile to the vector of tiles
+            this->tiles.push_back(tile);
+        }
+    }
+}
+
+sf::Sprite TileSet::getTile(int tileId) {
+    if (tileId == 0) {
+        return {};
+    }
+
+    // Create a new sprite
+    sf::Sprite tile(this->texture);
+
+    // Set the texture rectangle of the sprite
+    sf::Sprite sourceTile = this->tiles[tileId - 1];
+    tile.setTextureRect(sourceTile.getTextureRect());
+
+    return tile;
 }

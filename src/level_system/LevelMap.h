@@ -19,7 +19,7 @@ private:
     std::map<string, TileSet> layers;
 
 public:
-    explicit LevelMap(string levelMapPath, const TileSet& sourceTileSet);
+    explicit LevelMap(string levelMapPath, TileSet& sourceTileSet);
 
     void Render(sf::RenderWindow *window) override;
 

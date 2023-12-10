@@ -19,8 +19,11 @@ public:
     vector<sf::Sprite> tiles;
 
     explicit TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf::Vector2u& size);
-    TileSet(const std::vector<std::vector<int>>& tileIds, const TileSet& sourceTileSet);
+    TileSet(const std::vector<std::vector<int>>& tileIds, TileSet& sourceTileSet);
     void Render(sf::RenderWindow *window) override;
+
+    void parseTileIds(const std::vector<std::vector<int>>& tileIds, TileSet& sourceTileSet);
+    sf::Sprite getTile(int tileId);
 
     bool isInTile(sf::Vector2f position){
         return false;
