@@ -13,17 +13,6 @@
 #include "../engine/GameEngine.h"
 
 
-class bounce_listener : public b2ContactListener {
-    void BeginContact(b2Contact* contact) override {
-        // Bounce the ball
-        auto ballBody = contact->GetFixtureB()->GetBody();
-
-        auto ballVelocity = ballBody->GetLinearVelocity();
-        ballVelocity.y = -ballVelocity.y;
-        ballBody->SetLinearVelocity(ballVelocity);
-    }
-};
-
 class hello_world_component : public Component {
 
 private:
@@ -88,10 +77,6 @@ public:
         ballFixtureDef.density = 1.0f;
         ballFixtureDef.friction = 0.3f;
         ballBody->CreateFixture(&ballFixtureDef);
-
-        // Add a contact listener to the world
-        auto listener = new bounce_listener();
-        //world->SetContactListener(listener);
 
         // Create the ball shape
         ballShape.setRadius(radius);

@@ -6,7 +6,7 @@
 #define CA3_ANIMATION_CMP_H
 
 #include "../ecm/Component.h"
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 #include <iostream>
 
 class Animation_cmp : public Component {

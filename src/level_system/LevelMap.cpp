@@ -11,7 +11,7 @@
 
 using json = nlohmann::json;
 
-LevelMap::LevelMap(string levelMapPath, TileSet& sourceTileSet) {
+LevelMap::LevelMap(string levelMapPath, shared_ptr<TileSet> sourceTileSet) {
     this->levelMapPath = std::move(levelMapPath);
 
     // Read in the file as a json object
@@ -70,5 +70,14 @@ void LevelMap::Render(sf::RenderWindow *window) {
         // Render the layer
         layer.second.Render(window);
     }
+}
+
+TileSet LevelMap::getLayer(string layerName) {
+    for (auto &layer : this->layers) {
+        if (layer.first == layerName) {
+            return layer.second;
+        }
+    }
+    return TileSet("", sf::Vector2u(0, 0), sf::Vector2u(0, 0));
 }
 

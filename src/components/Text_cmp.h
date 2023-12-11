@@ -2,8 +2,8 @@
 // Created by micha on 30/11/2023.
 //
 
-#ifndef CA3_COMPONENT_TEXT_H
-#define CA3_COMPONENT_TEXT_H
+#ifndef CA3_TEXT_CMP_H
+#define CA3_TEXT_CMP_H
 
 #include "SFML/Graphics.hpp"
 #include "../ecm/Component.h"
@@ -11,12 +11,12 @@
 using namespace std;
 using namespace sf;
 
-class Component_Text : public Component {
+class Text_cmp : public Component {
 private:
     Font font;
     Text text;
 public:
-    explicit Component_Text(string Text) {
+    explicit Text_cmp(string Text) {
         text.setString(Text);
     }
 
@@ -61,4 +61,4 @@ public:
     }
 };
 
-#endif //CA3_COMPONENT_TEXT_H
+#endif //CA3_TEXT_CMP_H

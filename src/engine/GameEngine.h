@@ -7,6 +7,7 @@
 
 #include "../scenes/Scene.h"
 #include "Box2D/Dynamics/b2World.h"
+#include "../level_system/TileSet.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
@@ -60,6 +61,8 @@ public:
     }
 
     Font& getFont() { return font; }
+
+    static shared_ptr<TileSet> sourceTileSet;
 };
 
 #endif //CA3_GAMEENGINE_H

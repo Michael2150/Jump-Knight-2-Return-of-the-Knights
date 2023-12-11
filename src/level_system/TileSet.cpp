@@ -3,6 +3,8 @@
 //
 #include "TileSet.h"
 #include "../engine/GameEngine.h"
+#include "Box2D/Collision/Shapes/b2PolygonShape.h"
+#include "Box2D/Dynamics/b2Fixture.h"
 
 TileSet::TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf::Vector2u& size) {
     this->texture.loadFromFile(filePath);
@@ -29,13 +31,13 @@ TileSet::TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf:
     }
 }
 
-TileSet::TileSet(const std::vector <std::vector<int>>& tileIds, TileSet& sourceTileSet) {
-    this->texture = sourceTileSet.texture;
+TileSet::TileSet(const std::vector <std::vector<int>>& tileIds, shared_ptr<TileSet> sourceTileSet) {
+    this->texture = sourceTileSet->texture;
 
     // Set the scale so that all the tiles fit the width of the window, but keep the aspect ratio
     auto windowSize = GameEngine::getInstance()->getScreenSize();
     int gridWith = tileIds[0].size();
-    int tileWidth = sourceTileSet.tiles[0].getTextureRect().width;
+    int tileWidth = sourceTileSet->tiles[0].getTextureRect().width;
     this->scale = (float) windowSize.x / (float) (gridWith * tileWidth);
 
     parseTileIds(tileIds, sourceTileSet);
@@ -51,7 +53,7 @@ void TileSet::Render(sf::RenderWindow *window) {
     }
 }
 
-void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, TileSet& sourceTileSet) {
+void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, shared_ptr<TileSet> sourceTileSet) {
     // Bits on the far end of the 32-bit global tile ID are used for tile flags
     const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
     const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
@@ -77,7 +79,9 @@ void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, TileSet& sou
             tileId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG );
 
             // Get the tile sprite
-            sf::Sprite tile = sourceTileSet.getTile(tileId);
+            if (tileId == 0) continue;
+
+            sf::Sprite tile = sourceTileSet->getTile(tileId);
 
             // Set the scale of the tile
             tile.setScale(this->scale, this->scale);
@@ -130,4 +134,39 @@ sf::Sprite TileSet::getTile(int tileId) {
     tile.setTextureRect(sourceTile.getTextureRect());
 
     return tile;
+}
+
+void TileSet::setTileSetAsStaticBody(b2World *world) {
+    // Loop through each tile
+    int i = 0;
+
+    for (auto &tile : this->tiles) {
+        if (tile.getPosition().x == 0 && tile.getPosition().y == 0) continue;
+
+        // Create a body definition
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_staticBody;
+        auto physicsPos = PhysicsEngine::GraphicsToPhysics(tile.getPosition());
+        bodyDef.position.Set(physicsPos.x, physicsPos.y);
+
+        // Create the body
+        b2Body* body = world->CreateBody(&bodyDef);
+
+        // Create the shape
+        b2PolygonShape shape;
+        auto physicsSize = PhysicsEngine::GraphicsToPhysics({tile.getGlobalBounds().width / 2, tile.getGlobalBounds().height / 2});
+        shape.SetAsBox(physicsSize.x, physicsSize.y);
+
+        // Create the fixture
+        b2FixtureDef fixtureDef;
+        fixtureDef.shape = &shape;
+//        fixtureDef.density = density;
+//        fixtureDef.friction = friction;
+//        fixtureDef.restitution = restitution;
+        body->CreateFixture(&fixtureDef);
+
+        i++;
+    }
+
+    cout << "Created " << i << " static bodies" << endl;
 }

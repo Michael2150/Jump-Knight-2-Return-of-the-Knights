@@ -2,8 +2,8 @@
 // Created by ugwul on 09/12/2023.
 //
 
-#ifndef CA3_PLAYERCONTROLLER_H
-#define CA3_PLAYERCONTROLLER_H
+#ifndef CA3_PLAYER_CONTROLLER_CMP_H
+#define CA3_PLAYER_CONTROLLER_CMP_H
 
 #include "../ecm/Component.h"
 #include "../engine/GameEngine.h"
@@ -11,18 +11,17 @@
 #include "Component_Physics.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
-#include "Animator_Player_cmp.h"
+#include "Player_Animator_cmp.h"
 
-class PlayerController : public Component_Physics {
+class Player_Controller_cmp : public Component_Physics {
 
 private:
     b2World* world;
-    Animator_Player_cmp* animator;
+    Player_Animator_cmp* animator{};
     float speed = 300.0f;
 
 public:
-    explicit PlayerController(b2World* world) : world(world) {  }
-
+    explicit Player_Controller_cmp(b2World* world) : world(world) {  }
 
     void Start() override {
         Component::Start();
@@ -46,7 +45,7 @@ public:
         playerFixtureDef.friction = 1.f;
         this->body->CreateFixture(&playerFixtureDef);
 
-        animator = parent->getComponent<Animator_Player_cmp>().get();
+        animator = parent->getComponent<Player_Animator_cmp>().get();
     }
 
     void Update(float deltaTime) override {
@@ -62,15 +61,15 @@ public:
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
             velocity.x = PhysicsEngine::GraphicsToPhysics(-speed);
-            animator->SetAnimation(Animator_Player_cmp::animation_state::run);
+            animator->SetAnimation(Player_Animator_cmp::animation_state::run);
             animator->setFlip(true);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             velocity.x = PhysicsEngine::GraphicsToPhysics(speed);
-            animator->SetAnimation(Animator_Player_cmp::animation_state::run);
+            animator->SetAnimation(Player_Animator_cmp::animation_state::run);
             animator->setFlip(false);
         } else {
             velocity.x = 0.0f;
-            animator->SetAnimation(Animator_Player_cmp::animation_state::idle);
+            animator->SetAnimation(Player_Animator_cmp::animation_state::idle);
         }
 
         body->SetLinearVelocity(velocity);
@@ -82,14 +81,14 @@ public:
         }
 
         if(body->GetLinearVelocity().y > 0.001f){
-            animator->SetAnimation(Animator_Player_cmp::animation_state::fall);
+            animator->SetAnimation(Player_Animator_cmp::animation_state::fall);
         }
 
         if(body->GetLinearVelocity().y < -0.001f){
-            animator->SetAnimation(Animator_Player_cmp::animation_state::jump);
+            animator->SetAnimation(Player_Animator_cmp::animation_state::jump);
         }
     }
 
 };
 
-#endif //CA3_PLAYERCONTROLLER_H
+#endif //CA3_PLAYER_CONTROLLER_CMP_H
