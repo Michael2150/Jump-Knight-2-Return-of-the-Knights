@@ -11,6 +11,13 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "Box2D/Dynamics/b2Body.h"
 
+enum class SpecialTile {
+    SPAWN = 0,
+    END_BLOCK = 1,
+    BUTTON = 2,
+};
+
+
 class TileSet : public Entity {
 private:
     float scale = 1.0f;

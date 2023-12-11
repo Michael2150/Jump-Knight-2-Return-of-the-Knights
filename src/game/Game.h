@@ -11,6 +11,8 @@ public:
 class Level1 : public Scene {
 public:
     void Initialize() override;
+
+    void setActive(bool isActive) override;
 };
 
 class Level2 : public Scene {

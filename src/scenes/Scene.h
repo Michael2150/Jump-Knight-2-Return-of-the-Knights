@@ -55,7 +55,7 @@ public:
 
     View getViewport() { return viewport; }
 
-    void setActive(bool isActive);
+    virtual void setActive(bool isActive);
 };
 
 

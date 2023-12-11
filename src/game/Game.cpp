@@ -22,6 +22,12 @@ void Level1::Initialize() {
     player->getTransform().setPosition({100.0f, 100.0f});
 }
 
+void Level1::setActive(bool isActive) {
+    Scene::setActive(isActive);
+
+    // Do Music Stuff Here
+}
+
 void Level2::Initialize() {
     auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_2_map.json", GameEngine::sourceTileSet);
     levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
