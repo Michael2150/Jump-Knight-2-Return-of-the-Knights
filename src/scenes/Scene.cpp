@@ -3,10 +3,14 @@
 //
 
 #include "Scene.h"
+#include "../engine/GameEngine.h"
 
 Scene::Scene() {
     entities = vector<shared_ptr<Entity>>();
     world = PhysicsEngine::CreateWorld();
+
+    auto screenSize = GameEngine::getInstance()->getScreenSize();
+    viewport = View(FloatRect(0, 0, screenSize.x, screenSize.y));
 }
 
 void Scene::Start() {
@@ -37,4 +41,10 @@ void Scene::Render(sf::RenderWindow *window) {
     Entity::Render(window);
 
     PhysicsEngine::RenderDebugData(world.get(), window);
+}
+
+void Scene::setActive(bool isActive) {
+    if (isActive) {
+        GameEngine::getInstance()->getWindow().setView(viewport);
+    }
 }

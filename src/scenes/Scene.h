@@ -16,6 +16,7 @@ private:
     vector<shared_ptr<Entity>> entities;
     bool b_started = false;
     shared_ptr<b2World> world;
+    View viewport;
 
 public:
     explicit Scene();
@@ -51,6 +52,10 @@ public:
     void RemoveEntity(Entity* entity) {
         entities.erase(std::remove_if(entities.begin(), entities.end(), [entity](shared_ptr<Entity> e) { return e.get() == entity; }), entities.end());
     }
+
+    View getViewport() { return viewport; }
+
+    void setActive(bool isActive);
 };
 
 

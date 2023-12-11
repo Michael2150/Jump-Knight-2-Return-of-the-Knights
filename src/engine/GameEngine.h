@@ -43,7 +43,17 @@ public:
     Vector2i getScreenSize() { return {static_cast<int>(window->getSize().x), static_cast<int>(window->getSize().y)}; }
 
     void SetActiveScene(int index) {
-        current_scene = scenes[index].get();
+        auto new_current_scene = scenes[index].get();
+
+        if (current_scene != nullptr) {
+            current_scene->setActive(false);
+        }
+
+        if (new_current_scene != nullptr) {
+            new_current_scene->setActive(true);
+        }
+
+        current_scene = new_current_scene;
 
         if (!current_scene->HasStarted()) {
             current_scene->Start();

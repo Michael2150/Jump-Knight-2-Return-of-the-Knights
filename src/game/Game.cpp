@@ -7,11 +7,7 @@
 void MenuScene::Initialize() {
     PhysicsEngine::SetDebugDrawEnabled(true);
 
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("Menu Scene");
-
-    auto source = GameEngine::sourceTileSet;
-    auto levelMap = CreateEntity<LevelMap>("resources/tiled/main_menu.json", source);
+    auto levelMap = CreateEntity<LevelMap>("resources/tiled/main_menu.json", GameEngine::sourceTileSet);
     levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
@@ -19,22 +15,25 @@ void MenuScene::Initialize() {
 }
 
 void Level1::Initialize() {
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 1");
-
-    auto hello = CreateEntity<Entity>();
-    hello->CreateComponent<hello_world_component>(this->getWorld());
+    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_1_map.json", GameEngine::sourceTileSet);
+    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
     player->getTransform().setPosition({100.0f, 100.0f});
 }
 
 void Level2::Initialize() {
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 2");
+    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_2_map.json", GameEngine::sourceTileSet);
+    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+
+    auto player = CreateEntity<Player_Entity>(this->getWorld());
+    player->getTransform().setPosition({100.0f, 100.0f});
 }
 
 void Level3::Initialize() {
+    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_3_map.json", GameEngine::sourceTileSet);
+    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+
     auto TitleText = CreateEntity<Entity>();
     auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 3");
 }
