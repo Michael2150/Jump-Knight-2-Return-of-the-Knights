@@ -12,13 +12,16 @@
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Player_Animator_cmp.h"
+#include "Text_cmp.h"
 
 class Player_Controller_cmp : public Component_Physics {
 
 private:
     b2World* world;
     Player_Animator_cmp* animator{};
-    float speed = 300.0f;
+    Text_cmp* text {};
+    float speed = 350.f;
+    float jumpForce = 200.f;
 
 public:
     explicit Player_Controller_cmp(b2World* world) : world(world) {  }
@@ -26,12 +29,18 @@ public:
     void Start() override {
         Component::Start();
 
+        text = parent->getComponent<Text_cmp>().get();
+        text->setOrigin({15.0f, 20.0f});
+        text->setCharacterSize(12);
+
         auto playerSize = Vector2f(parent->getTransform().getScale().x * 27.0f, parent->getTransform().getScale().y * 40.0f);
         auto playerPhysicsSize = PhysicsEngine::GraphicsToPhysics(playerSize);
 
         // Create the player
         b2BodyDef playerBodyDef;
         playerBodyDef.type = b2_dynamicBody;
+        playerBodyDef.bullet = true;
+        playerBodyDef.fixedRotation = true;
         auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform().getPosition());
         playerBodyDef.position.Set(physicsPosition.x, physicsPosition.y);
         this->body = world->CreateBody(&playerBodyDef);
@@ -42,7 +51,8 @@ public:
         b2FixtureDef playerFixtureDef;
         playerFixtureDef.shape = &playerBox;
         playerFixtureDef.density = 1.0f;
-        playerFixtureDef.friction = 1.f;
+        playerFixtureDef.friction = 0.f;
+
         this->body->CreateFixture(&playerFixtureDef);
 
         animator = parent->getComponent<Player_Animator_cmp>().get();
@@ -51,6 +61,9 @@ public:
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
         HandleInput();
+
+        text->setText("Player Position: " + to_string(body->GetPosition().x) + ", " + to_string(body->GetPosition().y) + "\n" +
+                      "Player Velocity: " + to_string(body->GetLinearVelocity().x) + ", " + to_string(body->GetLinearVelocity().y) + "\n");
 
         parent->getTransform().setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
     }
@@ -76,8 +89,7 @@ public:
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
             body->GetLinearVelocity().y > -0.001f && body->GetLinearVelocity().y < 0.001f){
-            auto jumpForce = PhysicsEngine::GraphicsToPhysics(Vector2f(0.0f, -parent->getTransform().getScale().y * 50.0f));
-            body->ApplyLinearImpulse(jumpForce, body->GetWorldCenter(), true);
+            body->ApplyLinearImpulse(b2Vec2(0, -jumpForce), body->GetWorldCenter(), true);
         }
 
         if(body->GetLinearVelocity().y > 0.001f){

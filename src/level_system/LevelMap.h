@@ -23,7 +23,7 @@ public:
 
     void Render(sf::RenderWindow *window) override;
 
-    TileSet getLayer(string layerName);
+    TileSet * getLayer(string layerName);
 };
 
 

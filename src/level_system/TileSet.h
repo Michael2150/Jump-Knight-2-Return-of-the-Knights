@@ -27,7 +27,7 @@ public:
     void parseTileIds(const std::vector<std::vector<int>>& tileIds, shared_ptr<TileSet> sourceTileSet);
     sf::Sprite getTile(int tileId);
 
-    void setTileSetAsStaticBody(b2World* world);
+    void setTileSetAsStaticBody(b2World *world);
 
     bool isInTile(sf::Vector2f position){
         return false;

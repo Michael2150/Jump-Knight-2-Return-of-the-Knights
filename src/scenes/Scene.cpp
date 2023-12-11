@@ -3,7 +3,6 @@
 //
 
 #include "Scene.h"
-#include "../engine/PhysicsEngine.h"
 
 Scene::Scene() {
     entities = vector<shared_ptr<Entity>>();
@@ -36,4 +35,6 @@ void Scene::Render(sf::RenderWindow *window) {
     }
 
     Entity::Render(window);
+
+    PhysicsEngine::RenderDebugData(world.get(), window);
 }
