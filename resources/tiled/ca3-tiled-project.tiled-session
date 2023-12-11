@@ -74,9 +74,9 @@
     "project": "ca3-tiled-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "main_menu.json",
         "level_1_map.json",
         "level_2_map.json",
-        "main_menu.json",
         "level_3_map.json",
         "cavesofgallet_tiles.tsx",
         "level_1_map.tmx"
