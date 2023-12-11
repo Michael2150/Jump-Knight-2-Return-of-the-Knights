@@ -93,3 +93,11 @@ GameEngine *GameEngine::getInstance() {
     }
     return instance;
 }
+
+void GameEngine::PlaySound(const string &filePath) {
+    buffer.loadFromFile(filePath);
+    sound.setBuffer(buffer);
+    sound.setVolume(5);
+    sound.setLoop(true);
+    sound.play();
+}

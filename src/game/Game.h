@@ -6,6 +6,8 @@
 class MenuScene : public Scene {
 public:
     void Initialize() override;
+
+    void setActive(bool isActive) override;
 };
 
 class Level1 : public Scene {
@@ -18,6 +20,8 @@ public:
 class Level2 : public Scene {
 public:
     void Initialize() override;
+
+    void setActive(bool isActive) override;
 };
 
 class Level3 : public Scene {
