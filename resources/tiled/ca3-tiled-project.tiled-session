@@ -17,8 +17,8 @@
             "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 126.33333333333331,
-                "y": 630.1666666666666
+                "x": 121.33333333333334,
+                "y": 115.33333333333334
             }
         },
         "level_1_map.tmx": {
@@ -41,16 +41,16 @@
             "scale": 1.0485625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 120.16451093759315,
-                "y": 400.07152649460573
+                "x": 119.21082434285034,
+                "y": 645.6458246408774
             }
         },
         "main_menu.json": {
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 243.33333333333337,
-                "y": 546.3333333333333
+                "x": 242,
+                "y": 114
             }
         },
         "main_menu.json#cavesofgallet_tiles": {
@@ -68,17 +68,16 @@
     "map.tileHeight": 8,
     "map.tileWidth": 8,
     "openFiles": [
-        "level_1_map.json",
         "main_menu.json"
     ],
     "project": "ca3-tiled-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "level_1_map.json",
-        "level_2_map.json",
         "main_menu.json",
-        "level_3_map.json",
         "cavesofgallet_tiles.tsx",
+        "level_1_map.json",
+        "level_3_map.json",
+        "level_2_map.json",
         "level_1_map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",

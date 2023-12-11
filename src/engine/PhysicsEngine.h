@@ -10,6 +10,7 @@
 #include "Box2D/Common/b2Settings.h"
 #include "Box2D/Dynamics/b2World.h"
 #include "SFML/System/Vector2.hpp"
+#include "SFML/Graphics/RenderWindow.hpp"
 
 using namespace std;
 using namespace sf;
@@ -22,10 +23,13 @@ private:
     static float inversePhysicsScale;
     static float timeStep;
     static float total_frame_time;
+    static bool debugDrawEnabled;
 
 public:
     PhysicsEngine() = default;
     static void Update(b2World* world, float deltaTime);
+    static void SetDebugDrawEnabled(bool enabled);
+    static void RenderDebugData(b2World* world, RenderWindow* window);
     static shared_ptr<b2World> CreateWorld();
     static Vector2f PhysicsToGraphics(const b2Vec2& physicsVector);
     static b2Vec2 GraphicsToPhysics(const Vector2f& graphicsVector);

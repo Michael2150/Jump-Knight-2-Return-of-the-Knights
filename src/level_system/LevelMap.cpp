@@ -72,12 +72,12 @@ void LevelMap::Render(sf::RenderWindow *window) {
     }
 }
 
-TileSet LevelMap::getLayer(string layerName) {
+TileSet* LevelMap::getLayer(string layerName) {
     for (auto &layer : this->layers) {
         if (layer.first == layerName) {
-            return layer.second;
+            return &layer.second;
         }
     }
-    return TileSet("", sf::Vector2u(0, 0), sf::Vector2u(0, 0));
+    return nullptr;
 }
 

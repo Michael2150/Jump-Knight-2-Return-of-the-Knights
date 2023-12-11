@@ -146,6 +146,7 @@ void TileSet::setTileSetAsStaticBody(b2World *world) {
         // Create a body definition
         b2BodyDef bodyDef;
         bodyDef.type = b2_staticBody;
+        bodyDef.bullet = true;
         auto physicsPos = PhysicsEngine::GraphicsToPhysics(tile.getPosition());
         bodyDef.position.Set(physicsPos.x, physicsPos.y);
 
@@ -160,9 +161,9 @@ void TileSet::setTileSetAsStaticBody(b2World *world) {
         // Create the fixture
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &shape;
-//        fixtureDef.density = density;
-//        fixtureDef.friction = friction;
-//        fixtureDef.restitution = restitution;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.f;
+        fixtureDef.restitution = 0.f;
         body->CreateFixture(&fixtureDef);
 
         i++;
