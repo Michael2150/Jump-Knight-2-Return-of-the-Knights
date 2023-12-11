@@ -8,6 +8,8 @@
 #include "../ecm/Entity.h"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "Box2D/Dynamics/b2World.h"
+#include "Box2D/Dynamics/b2Body.h"
 
 class TileSet : public Entity {
 private:
@@ -19,11 +21,13 @@ public:
     vector<sf::Sprite> tiles;
 
     explicit TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf::Vector2u& size);
-    TileSet(const std::vector<std::vector<int>>& tileIds, TileSet& sourceTileSet);
+    TileSet(const std::vector<std::vector<int>>& tileIds, shared_ptr<TileSet> sourceTileSet);
     void Render(sf::RenderWindow *window) override;
 
-    void parseTileIds(const std::vector<std::vector<int>>& tileIds, TileSet& sourceTileSet);
+    void parseTileIds(const std::vector<std::vector<int>>& tileIds, shared_ptr<TileSet> sourceTileSet);
     sf::Sprite getTile(int tileId);
+
+    void setTileSetAsStaticBody(b2World* world);
 
     bool isInTile(sf::Vector2f position){
         return false;

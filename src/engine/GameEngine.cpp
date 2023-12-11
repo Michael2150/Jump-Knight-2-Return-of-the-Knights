@@ -5,6 +5,7 @@
 #include "../game/Game.h"
 
 GameEngine* GameEngine::instance = nullptr;
+shared_ptr<TileSet> GameEngine::sourceTileSet = nullptr;
 
 void GameEngine::Initialize(int width, int height, const std::string &title) {
     auto timer = sf::Clock();
@@ -12,6 +13,8 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
     this->title = title;
     this->window = new sf::RenderWindow(sf::VideoMode(width, height), this->title, sf::Style::Default);
     this->window->setFramerateLimit(60);
+
+    GameEngine::sourceTileSet = make_shared<TileSet>("resources/environment/tileset.png", sf::Vector2u(8, 8), sf::Vector2u(8, 12));
 
     // Create the scenes here:
     CreateScene<MenuScene>(); // Scene [0]

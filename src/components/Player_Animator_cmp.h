@@ -2,14 +2,14 @@
 // Created by ugwul on 10/12/2023.
 //
 
-#ifndef CA3_ANIMATOR_PLAYER_CMP_H
-#define CA3_ANIMATOR_PLAYER_CMP_H
+#ifndef CA3_PLAYER_ANIMATOR_CMP_H
+#define CA3_PLAYER_ANIMATOR_CMP_H
 
 #include "../ecm/Component.h"
 #include "Animation_cmp.h"
-#include "PlayerController.h"
+#include "Player_Controller_cmp.h"
 
-class Animator_Player_cmp : public Component {
+class Player_Animator_cmp : public Component {
 
 private:
     vector<Animation_cmp> animations;
@@ -79,4 +79,4 @@ public:
     }
 };
 
-#endif //CA3_ANIMATOR_PLAYER_CMP_H
+#endif //CA3_PLAYER_ANIMATOR_CMP_H
