@@ -12,7 +12,6 @@ TileSet::TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf:
     // Set the scale so the all the tiles fit the width of the window
     auto windowSize = GameEngine::getInstance()->getScreenSize();
     this->scale = (float) windowSize.x / (float) (tileSize.x * size.x);
-    this->scale /= 3;
 
     // Loop through each tile
     for (int y = 0; y < size.y; y++) {
@@ -76,7 +75,7 @@ void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, shared_ptr<T
             bool flippedDiagonally = (tileId & FLIPPED_DIAGONALLY_FLAG) != 0;
 
             // Remove the flags from the tile id
-            tileId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG );
+            tileId = parseTileId(tileId);
 
             // Get the tile sprite
             if (tileId == 0) continue;
@@ -119,6 +118,8 @@ void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, shared_ptr<T
             this->tiles.push_back(tile);
         }
     }
+
+    this->tileIds = tileIds;
 }
 
 sf::Sprite TileSet::getTile(int tileId) {
@@ -170,4 +171,48 @@ void TileSet::setTileSetAsStaticBody(b2World *world) {
     }
 
     cout << "Created " << i << " static bodies" << endl;
+}
+
+int TileSet::parseTileId(int tileId) {
+    // Bits on the far end of the 32-bit global tile ID are used for tile flags
+    const unsigned FLIPPED_HORIZONTALLY_FLAG  = 0x80000000;
+    const unsigned FLIPPED_VERTICALLY_FLAG    = 0x40000000;
+    const unsigned FLIPPED_DIAGONALLY_FLAG    = 0x20000000;
+    tileId &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG );
+    return tileId;
+}
+
+sf::Vector2i TileSet::getTileIndexFromPosition(sf::Vector2f position) {
+    for (int y = 0; y < this->tileIds.size(); y++) {
+        for (int x = 0; x < this->tileIds[y].size(); x++) {
+            auto tile = this->tiles[y * this->tileIds[y].size() + x];
+            if (tile.getGlobalBounds().contains(position)) {
+                return {x, y};
+            }
+        }
+    }
+    return {-1, -1};
+}
+
+int TileSet::getTileIdFromPosition(sf::Vector2f position) {
+    auto index = getTileIndexFromPosition(position);
+    return this->tileIds[index.y][index.x];
+}
+
+bool TileSet::isOnTile(sf::Vector2f position, int tileId) {
+    auto posTileID = getTileIdFromPosition(position);
+    posTileID = parseTileId(posTileID);
+    return posTileID == tileId;
+}
+
+sf::Vector2f TileSet::getTilePosition(int tileId) {
+    for (int y = 0; y < this->tileIds.size(); y++) {
+        for (int x = 0; x < this->tileIds[y].size(); x++) {
+            auto tile = this->tiles[y * this->tileIds[y].size() + x];
+            if (tileId == parseTileId(this->tileIds[y][x])) {
+                return tile.getPosition();
+            }
+        }
+    }
+    return {-1, -1};
 }

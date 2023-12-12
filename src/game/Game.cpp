@@ -5,10 +5,11 @@
 #include "../entities/Player_Entity.h"
 
 void MenuScene::Initialize() {
-    PhysicsEngine::SetDebugDrawEnabled(true);
+    PhysicsEngine::SetDebugDrawEnabled(false);
 
     auto levelMap = CreateEntity<LevelMap>("resources/tiled/main_menu.json", GameEngine::sourceTileSet);
     levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+    levelMap->getLayer("special")->shouldRender = false;
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
     player->getTransform().setPosition({600.0f, 100.0f});
@@ -17,9 +18,12 @@ void MenuScene::Initialize() {
 void Level1::Initialize() {
     auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_1_map.json", GameEngine::sourceTileSet);
     levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+    levelMap->getLayer("special")->shouldRender = false;
+
+    auto TitleText = CreateEntity<Entity>();
+    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 1");
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
-    player->getTransform().setPosition({100.0f, 100.0f});
 }
 
 void Level1::setActive(bool isActive) {
@@ -31,6 +35,10 @@ void Level1::setActive(bool isActive) {
 void Level2::Initialize() {
     auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_2_map.json", GameEngine::sourceTileSet);
     levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+    levelMap->getLayer("special")->shouldRender = false;
+
+    auto TitleText = CreateEntity<Entity>();
+    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 2");
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
     player->getTransform().setPosition({100.0f, 100.0f});
@@ -39,9 +47,13 @@ void Level2::Initialize() {
 void Level3::Initialize() {
     auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_3_map.json", GameEngine::sourceTileSet);
     levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+    levelMap->getLayer("special")->shouldRender = false;
 
     auto TitleText = CreateEntity<Entity>();
     auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 3");
+
+    auto player = CreateEntity<Player_Entity>(this->getWorld());
+    player->getTransform().setPosition({100.0f, 100.0f});
 }
 
 void EndScene::Initialize() {

@@ -22,6 +22,7 @@ private:
     Text_cmp* text {};
     float speed = 350.f;
     float jumpForce = 200.f;
+    bool isJumping = false;
 
 public:
     explicit Player_Controller_cmp(b2World* world) : world(world) {  }
@@ -65,6 +66,13 @@ public:
         text->setText("Player Position: " + to_string(body->GetPosition().x) + ", " + to_string(body->GetPosition().y) + "\n" +
                       "Player Velocity: " + to_string(body->GetLinearVelocity().x) + ", " + to_string(body->GetLinearVelocity().y) + "\n");
 
+        if (isJumping) {
+            // if the player starts to fall
+            if (body->GetLinearVelocity().y > 0.001f) {
+                isJumping = false;
+            }
+        }
+
         parent->getTransform().setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
     }
 
@@ -88,8 +96,11 @@ public:
         body->SetLinearVelocity(velocity);
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
+            !isJumping &&
             body->GetLinearVelocity().y > -0.001f && body->GetLinearVelocity().y < 0.001f){
             body->ApplyLinearImpulse(b2Vec2(0, -jumpForce), body->GetWorldCenter(), true);
+
+            isJumping = true;
         }
 
         if(body->GetLinearVelocity().y > 0.001f){

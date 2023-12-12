@@ -22,38 +22,27 @@ class TileSet : public Entity {
 private:
     float scale = 1.0f;
 
+
 public:
     bool shouldRender = true;
     sf::Texture texture;
     vector<sf::Sprite> tiles;
+    std::vector<std::vector<int>> tileIds;
 
     explicit TileSet(const string& filePath, const sf::Vector2u& tileSize, const sf::Vector2u& size);
     TileSet(const std::vector<std::vector<int>>& tileIds, shared_ptr<TileSet> sourceTileSet);
     void Render(sf::RenderWindow *window) override;
 
     void parseTileIds(const std::vector<std::vector<int>>& tileIds, shared_ptr<TileSet> sourceTileSet);
+    static int parseTileId(int tileId);
     sf::Sprite getTile(int tileId);
 
     void setTileSetAsStaticBody(b2World *world);
 
-    bool isInTile(sf::Vector2f position){
-        return false;
-    }
-    bool isInTile(sf::Vector2f position, int tileId){
-        return false;
-    }
-    bool isInTile(sf::Vector2f position, std::vector<int> tileIds){
-        return false;
-    }
-    bool isNotInTile(sf::Vector2f position){
-        return false;
-    }
-    bool isNotInTile(sf::Vector2f position, int tileId){
-        return false;
-    }
-    bool isNotInTile(sf::Vector2f position, std::vector<int> tileIds){
-        return false;
-    }
+    sf::Vector2i getTileIndexFromPosition(sf::Vector2f position);
+    int getTileIdFromPosition(sf::Vector2f position);
+    bool isOnTile(sf::Vector2f position, int tileId);
+    sf::Vector2f getTilePosition(int tileId);
 };
 
 #endif //CA3_TILESET_H
