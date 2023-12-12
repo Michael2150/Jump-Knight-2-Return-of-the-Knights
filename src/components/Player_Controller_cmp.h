@@ -34,7 +34,7 @@ public:
         text->setOrigin({15.0f, 20.0f});
         text->setCharacterSize(12);
 
-        auto playerSize = Vector2f(parent->getTransform().getScale().x * 27.0f, parent->getTransform().getScale().y * 40.0f);
+        auto playerSize = Vector2f(parent->getTransform()->getScale().x * 27.0f, parent->getTransform()->getScale().y * 40.0f);
         auto playerPhysicsSize = PhysicsEngine::GraphicsToPhysics(playerSize);
 
         // Create the player
@@ -42,7 +42,7 @@ public:
         playerBodyDef.type = b2_dynamicBody;
         playerBodyDef.bullet = true;
         playerBodyDef.fixedRotation = true;
-        auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform().getPosition());
+        auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform()->getPosition());
         playerBodyDef.position.Set(physicsPosition.x, physicsPosition.y);
         this->body = world->CreateBody(&playerBodyDef);
 
@@ -61,7 +61,13 @@ public:
 
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
+
         HandleInput();
+
+        if (parent->getTransform()->hasPosChanged()) {
+            auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform()->getPosition());
+            body->SetTransform(physicsPosition, body->GetAngle());
+        }
 
         text->setText("Player Position: " + to_string(body->GetPosition().x) + ", " + to_string(body->GetPosition().y) + "\n" +
                       "Player Velocity: " + to_string(body->GetLinearVelocity().x) + ", " + to_string(body->GetLinearVelocity().y) + "\n");
@@ -73,7 +79,7 @@ public:
             }
         }
 
-        parent->getTransform().setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
+        parent->getTransform()->setPosition(PhysicsEngine::PhysicsToGraphics(body->GetPosition()));
     }
 
     void HandleInput(){

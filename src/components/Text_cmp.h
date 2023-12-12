@@ -32,7 +32,7 @@ public:
 
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
-        text.setPosition(parent->getTransform().getPosition());
+        text.setPosition(parent->getTransform()->getPosition());
     }
 
     void Render(sf::RenderWindow *window) override {

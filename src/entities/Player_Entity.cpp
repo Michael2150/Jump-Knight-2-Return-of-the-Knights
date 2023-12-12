@@ -4,7 +4,6 @@
 
 #include "Player_Entity.h"
 #include "../components/Player_Controller_cmp.h"
-#include "../components/Text_cmp.h"
 #include "../components/Player_Camera_cmp.h"
 
 void Player_Entity::Start() {
@@ -13,7 +12,7 @@ void Player_Entity::Start() {
     CreateComponent<Player_Animator_cmp>();
     CreateComponent<Player_Camera_cmp>();
 
-    getTransform().setScale({2.0f, 2.0f});
+    getTransform()->setScale({2.0f, 2.0f});
 
     // I forgot this and it messed me uppppp for like 10mins!!!
     Entity::Start();

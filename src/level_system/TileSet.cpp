@@ -78,7 +78,10 @@ void TileSet::parseTileIds(const vector<std::vector<int>> &tileIds, shared_ptr<T
             tileId = parseTileId(tileId);
 
             // Get the tile sprite
-            if (tileId == 0) continue;
+            if (tileId == 0){
+                this->tiles.emplace_back();
+                continue;
+            }
 
             sf::Sprite tile = sourceTileSet->getTile(tileId);
 

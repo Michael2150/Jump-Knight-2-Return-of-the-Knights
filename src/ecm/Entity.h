@@ -24,11 +24,12 @@ private:
     vector<shared_ptr<Component>> components;
 
 protected:
-    Transform_Component transform;
+    shared_ptr<Transform_Component> transform;
 
 public:
-    explicit Entity() : transform(Transform_Component()) {
+    explicit Entity() {
         components = vector<shared_ptr<Component>>();
+        transform = CreateComponent<Transform_Component>();
     };
 
     virtual void Start();
@@ -58,7 +59,7 @@ public:
         return nullptr;
     }
 
-    Transform_Component& getTransform() { return transform; }
+    shared_ptr<Transform_Component> getTransform() { return transform; }
 };
 
 

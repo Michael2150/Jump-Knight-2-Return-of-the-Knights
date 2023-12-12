@@ -4,13 +4,22 @@
 
 #include "Scene.h"
 #include "../engine/GameEngine.h"
+#include "../entities/Player_Entity.h"
 
-Scene::Scene() {
+Scene::Scene(const string& LevelMapPath, bool requiresPlayer) {
     entities = vector<shared_ptr<Entity>>();
     world = PhysicsEngine::CreateWorld();
 
     auto screenSize = GameEngine::getInstance()->getScreenSize();
     viewport = View(FloatRect(0, 0, screenSize.x, screenSize.y));
+
+    this->levelMap = CreateEntity<LevelMap>(LevelMapPath, GameEngine::sourceTileSet);
+    this->levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
+    this->levelMap->getLayer("special")->shouldRender = false;
+
+    if (requiresPlayer) {
+        this->player = CreateEntity<Player_Entity>(this->getWorld());
+    }
 }
 
 void Scene::Start() {
@@ -48,3 +57,12 @@ void Scene::setActive(bool isActive) {
         GameEngine::getInstance()->getWindow().setView(viewport);
     }
 }
+
+void Scene::RespawnPlayer() {
+    auto specialLayer = this->levelMap->getLayer("special");
+    auto spawnPos = specialLayer->getTilePosition(static_cast<int>(SpecialTile::SPAWN));
+    this->player->getTransform()->setPosition(spawnPos);
+    this->player->getTransform()->PositionChanged();
+}
+
+

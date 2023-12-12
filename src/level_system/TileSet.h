@@ -12,7 +12,7 @@
 #include "Box2D/Dynamics/b2Body.h"
 
 enum class SpecialTile {
-    SPAWN = 0,
+    SPAWN = 95,
     END_BLOCK = 1,
     BUTTON = 2,
 };

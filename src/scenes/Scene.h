@@ -8,6 +8,7 @@
 #include "../ecm/Entity.h"
 #include "Box2D/Dynamics/b2World.h"
 #include "../engine/PhysicsEngine.h"
+#include "../level_system/LevelMap.h"
 
 //class Entity; // Forward declaration
 
@@ -18,8 +19,15 @@ private:
     shared_ptr<b2World> world;
     View viewport;
 
+protected:
+    explicit Scene(const string& LevelMapPath, bool requiresPlayer = true);
+    shared_ptr<Entity> player;
+    shared_ptr<LevelMap> levelMap;
+
+    void RespawnPlayer();
+
 public:
-    explicit Scene();
+    Scene() = delete;
 
     // Must be overridden by derived classes
     // This is where all entities should be created

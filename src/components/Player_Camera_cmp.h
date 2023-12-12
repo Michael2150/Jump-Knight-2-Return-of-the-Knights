@@ -20,7 +20,7 @@ public:
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
 
-        auto player_pos = parent->getTransform().getPosition();
+        auto player_pos = parent->getTransform()->getPosition();
         auto viewport = GameEngine::getInstance()->getWindow().getView();
 
         viewport.setCenter(viewport.getCenter().x, player_pos.y + y_offset);

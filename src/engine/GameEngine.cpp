@@ -17,11 +17,11 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
     GameEngine::sourceTileSet = make_shared<TileSet>("resources/environment/tileset.png", sf::Vector2u(8, 8), sf::Vector2u(8, 12));
 
     // Create the scenes here:
-    CreateScene<MenuScene>(); // Scene [0]
-    CreateScene<Level1>(); // Scene [1]
-    CreateScene<Level2>(); // Scene [2]
-    CreateScene<Level3>(); // Scene [3]
-    CreateScene<EndScene>(); // Scene [4]
+    CreateScene<MenuScene>("resources/tiled/main_menu.json", false); // Scene [0]
+    CreateScene<Level1>("resources/tiled/level_1_map.json"); // Scene [1]
+    CreateScene<Level2>("resources/tiled/level_2_map.json"); // Scene [2]
+    CreateScene<Level3>("resources/tiled/level_3_map.json"); // Scene [3]
+    CreateScene<EndScene>("resources/tiled/main_menu.json", false); // Scene [4]
 
     cout << "Game engine initialized in " << std::fixed << std::setprecision(6) << timer.restart().asSeconds() << " seconds." << endl;
 }

@@ -66,11 +66,11 @@ public:
     }
     Scene* GetCurrentScene() { return current_scene; }
 
-    template <class T>
-    void CreateScene() { // Creates and adds a scene of type T to the game engine.
+    template <class T, typename... Args>
+    void CreateScene(Args&&... args) { // Creates and adds a scene of type T to the game engine.
         static_assert(std::is_base_of<Scene, T>::value, "T must be of type Scene or derived from Scene");
 
-        shared_ptr<T> scene = make_shared<T>();
+        shared_ptr<T> scene = make_shared<T>(std::forward<Args>(args)...);
         scenes.push_back(scene);
         scene->Initialize();
     }

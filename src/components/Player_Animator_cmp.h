@@ -54,12 +54,12 @@ public:
         // Update the current animation
         currentAnimation->Update(deltaTime);
 
-        currentAnimation->setPos(parent->getTransform().getPosition());
+        currentAnimation->setPos(parent->getTransform()->getPosition());
 
         if (flipped) {
-            currentAnimation->getSprite().setScale(-parent->getTransform().getScale().x, parent->getTransform().getScale().y);
+            currentAnimation->getSprite().setScale(-parent->getTransform()->getScale().x, parent->getTransform()->getScale().y);
         } else {
-            currentAnimation->getSprite().setScale(parent->getTransform().getScale().x, parent->getTransform().getScale().y);
+            currentAnimation->getSprite().setScale(parent->getTransform()->getScale().x, parent->getTransform()->getScale().y);
         }
     }
 

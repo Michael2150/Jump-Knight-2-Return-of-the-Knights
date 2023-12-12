@@ -1,77 +1,57 @@
 #include "Game.h"
-#include "../components/Text_cmp.h"
 #include "../components/hello_world_component.h"
-#include "../level_system/LevelMap.h"
-#include "../entities/Player_Entity.h"
 
+// Menu Scene
 void MenuScene::Initialize() {
-    PhysicsEngine::SetDebugDrawEnabled(false);
-
-    auto levelMap = CreateEntity<LevelMap>("resources/tiled/main_menu.json", GameEngine::sourceTileSet);
-    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
-    levelMap->getLayer("special")->shouldRender = false;
-
-    auto player = CreateEntity<Player_Entity>(this->getWorld());
-    player->getTransform().setPosition({600.0f, 100.0f});
+    PhysicsEngine::SetDebugDrawEnabled(true);
 }
-
 void MenuScene::setActive(bool isActive) {
     Scene::setActive(isActive);
-
-    // Do Music Stuff Here
-    GameEngine::getInstance()->PlaySound("resources/Music/Menu_Music.ogg");
+    if (isActive) {
+        GameEngine::getInstance()->PlaySound("resources/Music/Menu_Music.ogg");
+    }
 }
 
+// Level 1
 void Level1::Initialize() {
-    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_1_map.json", GameEngine::sourceTileSet);
-    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
-    levelMap->getLayer("special")->shouldRender = false;
-
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 1");
-
-    auto player = CreateEntity<Player_Entity>(this->getWorld());
+    // Other Entities can be set up here:
 }
-
 void Level1::setActive(bool isActive) {
     Scene::setActive(isActive);
-
-    // Do Music Stuff Here
-    GameEngine::getInstance()->PlaySound("resources/Music/Level_1_Music.ogg");
+    if (isActive) {
+        RespawnPlayer();
+        GameEngine::getInstance()->PlaySound("resources/Music/Level_1_Music.ogg");
+    }
 }
 
+// Level 2
 void Level2::Initialize() {
-    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_2_map.json", GameEngine::sourceTileSet);
-    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
-    levelMap->getLayer("special")->shouldRender = false;
-
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 2");
-
-    auto player = CreateEntity<Player_Entity>(this->getWorld());
-    player->getTransform().setPosition({100.0f, 100.0f});
+    // Other Entities can be set up here:
 }
-
 void Level2::setActive(bool isActive) {
     Scene::setActive(isActive);
-
-    // Do Music Stuff Here
-    GameEngine::getInstance()->PlaySound("resources/Music/Level_2_Music.ogg");
+    if (isActive) {
+        RespawnPlayer();
+        GameEngine::getInstance()->PlaySound("resources/Music/Level_2_Music.ogg");
+    }
 }
 
+// Level 3
 void Level3::Initialize() {
-    auto levelMap = CreateEntity<LevelMap>("resources/tiled/level_3_map.json", GameEngine::sourceTileSet);
-    levelMap->getLayer("platforms")->setTileSetAsStaticBody(this->getWorld());
-    levelMap->getLayer("special")->shouldRender = false;
-
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("Level 3");
-
-    auto player = CreateEntity<Player_Entity>(this->getWorld());
-    player->getTransform().setPosition({100.0f, 100.0f});
+    // Other Entities can be set up here:
+}
+void Level3::setActive(bool isActive) {
+    Scene::setActive(isActive);
+    if (isActive) {
+        RespawnPlayer();
+        GameEngine::getInstance()->PlaySound("resources/Music/Level_3_Music.ogg");
+    }
 }
 
+// End Scene
 void EndScene::Initialize() {
-    auto TitleText = CreateEntity<Entity>();
-    auto textComponent = TitleText->CreateComponent<Text_cmp>("End Scene");
+    // Other Entities can be set up here:
+}
+void EndScene::setActive(bool isActive) {
+    Scene::setActive(isActive);
 }
