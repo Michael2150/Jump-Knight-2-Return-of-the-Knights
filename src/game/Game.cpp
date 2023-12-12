@@ -3,6 +3,7 @@
 #include "../components/hello_world_component.h"
 #include "../level_system/LevelMap.h"
 #include "../entities/Player_Entity.h"
+#include "SFML/Audio/Music.hpp"
 
 void MenuScene::Initialize() {
     PhysicsEngine::SetDebugDrawEnabled(false);
@@ -13,6 +14,13 @@ void MenuScene::Initialize() {
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
     player->getTransform().setPosition({600.0f, 100.0f});
+}
+
+void MenuScene::setActive(bool isActive) {
+    Scene::setActive(isActive);
+
+    // Do Music Stuff Here
+    GameEngine::getInstance()->PlaySound("resources/Music/Menu_Music.ogg");
 }
 
 void Level1::Initialize() {
@@ -30,6 +38,7 @@ void Level1::setActive(bool isActive) {
     Scene::setActive(isActive);
 
     // Do Music Stuff Here
+    GameEngine::getInstance()->PlaySound("resources/Music/Level_1_Music.ogg");
 }
 
 void Level2::Initialize() {
@@ -42,6 +51,13 @@ void Level2::Initialize() {
 
     auto player = CreateEntity<Player_Entity>(this->getWorld());
     player->getTransform().setPosition({100.0f, 100.0f});
+}
+
+void Level2::setActive(bool isActive) {
+    Scene::setActive(isActive);
+
+    // Do Music Stuff Here
+    GameEngine::getInstance()->PlaySound("resources/Music/Level_2_Music.ogg");
 }
 
 void Level3::Initialize() {
