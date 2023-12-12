@@ -3,7 +3,6 @@
 #include "../components/hello_world_component.h"
 #include "../level_system/LevelMap.h"
 #include "../entities/Player_Entity.h"
-#include "SFML/Audio/Music.hpp"
 
 void MenuScene::Initialize() {
     PhysicsEngine::SetDebugDrawEnabled(false);

@@ -9,7 +9,7 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "../level_system/TileSet.h"
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include <iostream>
 
 using namespace std;
@@ -23,8 +23,8 @@ private:
     Scene* current_scene;
     string title;
     Font font;
-    sf::Sound sound;
-    sf::SoundBuffer buffer;
+//    sf::Sound sound;
+//    sf::SoundBuffer buffer;
 
 public:
     explicit GameEngine() {

@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 include(FetchContent)
 FetchContent_Declare(SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.x)
+        GIT_TAG 2.6.1)
 FetchContent_MakeAvailable(SFML)
 
 # B2D - Box2D phyics library
