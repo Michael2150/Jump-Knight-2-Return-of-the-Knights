@@ -46,6 +46,8 @@ public:
         return world.get();
     }
 
+    LevelMap* getLevelMap() { return levelMap.get(); }
+
     bool HasStarted() const { return b_started; }
 
     template <class T, typename... Args>

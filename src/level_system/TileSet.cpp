@@ -199,11 +199,13 @@ sf::Vector2i TileSet::getTileIndexFromPosition(sf::Vector2f position) {
 
 int TileSet::getTileIdFromPosition(sf::Vector2f position) {
     auto index = getTileIndexFromPosition(position);
+    if (index.x == -1 || index.y == -1) return -1;
     return this->tileIds[index.y][index.x];
 }
 
 bool TileSet::isOnTile(sf::Vector2f position, int tileId) {
     auto posTileID = getTileIdFromPosition(position);
+    if (posTileID == -1) return false;
     posTileID = parseTileId(posTileID);
     return posTileID == tileId;
 }
