@@ -33,16 +33,16 @@ public:
         }
     }
 
-    void Render(sf::RenderWindow *window) override {
-        Component::Render(window);
-
-        // Render a small dot on the player's position
-        auto pos = parent->getTransform()->getPosition();
-        sf::CircleShape shape(5);
-        shape.setFillColor(sf::Color::Green);
-        shape.setPosition(pos.x, pos.y);
-        window->draw(shape);
-    }
+//    void Render(sf::RenderWindow *window) override {
+//        Component::Render(window);
+//
+//        // Render a small dot on the player's position
+//        auto pos = parent->getTransform()->getPosition();
+//        sf::CircleShape shape(5);
+//        shape.setFillColor(sf::Color::Green);
+//        shape.setPosition(pos.x, pos.y);
+//        window->draw(shape);
+//    }
 };
 
 #endif //CA3_PLAYER_DOOR_CHECK_CMP_H

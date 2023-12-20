@@ -8,7 +8,6 @@
 #include "../components/Player_Door_Check_cmp.h"
 
 void Player_Entity::Start() {
-    CreateComponent<Text_cmp>("Player Debug");
     CreateComponent<Player_Door_Check_cmp>();
     CreateComponent<Player_Controller_cmp>(world);
     CreateComponent<Player_Animator_cmp>();

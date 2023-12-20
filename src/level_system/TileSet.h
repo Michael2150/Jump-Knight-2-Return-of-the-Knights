@@ -14,6 +14,7 @@
 enum class SpecialTile {
     SPAWN = 95,
     END_BLOCK = 96,
+    TEXT_POSITION = 69,
 };
 
 

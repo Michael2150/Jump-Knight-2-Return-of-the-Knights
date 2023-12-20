@@ -19,7 +19,6 @@ class Player_Controller_cmp : public Component_Physics {
 private:
     b2World* world;
     Player_Animator_cmp* animator{};
-    Text_cmp* text {};
     float speed = 400.f;
     float jumpForce = 300.f;
     bool isJumping = false;
@@ -29,10 +28,6 @@ public:
 
     void Start() override {
         Component::Start();
-
-        text = parent->getComponent<Text_cmp>().get();
-        text->setOrigin({15.0f, 20.0f});
-        text->setCharacterSize(12);
 
         auto playerSize = Vector2f(parent->getTransform()->getScale().x * 20.0f, parent->getTransform()->getScale().y * 30.0f);
         auto playerPhysicsSize = PhysicsEngine::GraphicsToPhysics(playerSize);
@@ -68,9 +63,6 @@ public:
             auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform()->getPosition());
             body->SetTransform(physicsPosition, body->GetAngle());
         }
-
-        text->setText("Player Position: " + to_string(body->GetPosition().x) + ", " + to_string(body->GetPosition().y) + "\n" +
-                      "Player Velocity: " + to_string(body->GetLinearVelocity().x) + ", " + to_string(body->GetLinearVelocity().y) + "\n");
 
         if (isJumping) {
             // if the player starts to fall

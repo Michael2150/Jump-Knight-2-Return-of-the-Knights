@@ -211,13 +211,20 @@ bool TileSet::isOnTile(sf::Vector2f position, int tileId) {
 }
 
 sf::Vector2f TileSet::getTilePosition(int tileId) {
+    auto pos = sf::Vector2f(-1, -1);
     for (int y = 0; y < this->tileIds.size(); y++) {
         for (int x = 0; x < this->tileIds[y].size(); x++) {
             auto tile = this->tiles[y * this->tileIds[y].size() + x];
-            if (tileId == parseTileId(this->tileIds[y][x])) {
-                return tile.getPosition();
+            auto parsedTileId = parseTileId(this->tileIds[y][x]);
+
+            if (parsedTileId == 0) {
+                continue;
+            }
+
+            if (tileId == parsedTileId) {
+                pos = tile.getPosition();
             }
         }
     }
-    return {-1, -1};
+    return pos;
 }

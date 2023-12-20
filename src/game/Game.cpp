@@ -5,12 +5,12 @@
 // Menu Scene
 void MenuScene::Initialize() {
 //    PhysicsEngine::SetDebugDrawEnabled(true);
-
+    // Get the special layer
+    auto specialLayer = this->levelMap->getLayer("special");
+    auto TitlePos = specialLayer->getTilePosition(static_cast<int>(SpecialTile::TEXT_POSITION));
     auto Title = CreateEntity<Entity>();
-    auto TitleText = Title->CreateComponent<Text_cmp>("Jump Knight");
-    TitleText->setCharacterSize(100);
-    TitleText->setFillColor(sf::Color::White);
-    Title->getTransform()->setPosition({400, 100});
+    Title->getTransform()->setPosition(TitlePos);
+    auto TitleText = Title->CreateComponent<Text_cmp>("Jump Knight \n\n  [A] or [D] to move \n  [Space] to jump ", 35, sf::Color::White, "resources/fonts/marker.ttf");
 }
 void MenuScene::setActive(bool isActive) {
     Scene::setActive(isActive);
@@ -52,7 +52,12 @@ void Level2::setActive(bool isActive) {
 
 // End Scene
 void EndScene::Initialize() {
-    // Other Entities can be set up here:
+    // Get the special layer
+    auto specialLayer = this->levelMap->getLayer("special");
+    auto TitlePos = specialLayer->getTilePosition(static_cast<int>(SpecialTile::TEXT_POSITION));
+    auto Title = CreateEntity<Entity>();
+    Title->getTransform()->setPosition(TitlePos);
+    auto TitleText = Title->CreateComponent<Text_cmp>("You made it!, go through the door to restart", 35, sf::Color::White, "resources/fonts/marker.ttf");
 }
 void EndScene::setActive(bool isActive) {
     Scene::setActive(isActive);

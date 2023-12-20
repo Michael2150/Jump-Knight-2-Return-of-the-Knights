@@ -15,19 +15,32 @@ class Text_cmp : public Component {
 private:
     Font font;
     Text text;
+    string fontPath = "resources/fonts/arial.ttf";
+    int characterSize = 12;
+    Color color = Color::White;
+
 public:
     explicit Text_cmp(string Text) {
         text.setString(Text);
     }
 
+    explicit Text_cmp(string Text, int characterSize, Color color, string fontPath) {
+        text.setString(Text);
+
+        this->fontPath = fontPath;
+        this->characterSize = characterSize;
+        this->color = color;
+    }
+
     void Start() override {
         Component::Start();
 
-        font.loadFromFile("resources/fonts/arial.ttf");
+        font.loadFromFile(fontPath);
+
         text.setFont(font);
-        text.setCharacterSize(24);
-        text.setFillColor(sf::Color::White);
-        text.setStyle(sf::Text::Bold);
+        text.setCharacterSize(characterSize);
+        text.setFillColor(color);
+        text.setOrigin(0, 0);
     }
 
     void Update(float deltaTime) override {
@@ -42,22 +55,6 @@ public:
 
     void setText(string str) {
         text.setString(str);
-    }
-
-    void setCharacterSize(int size) {
-        text.setCharacterSize(size);
-    }
-
-    void setFillColor(Color color) {
-        text.setFillColor(color);
-    }
-
-    void setStyle(Text::Style style) {
-        text.setStyle(style);
-    }
-
-    void setOrigin(Vector2f origin) {
-        text.setOrigin(origin);
     }
 };
 
