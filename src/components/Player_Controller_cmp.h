@@ -20,8 +20,8 @@ private:
     b2World* world;
     Player_Animator_cmp* animator{};
     Text_cmp* text {};
-    float speed = 350.f;
-    float jumpForce = 200.f;
+    float speed = 400.f;
+    float jumpForce = 500.f;
     bool isJumping = false;
 
 public:
