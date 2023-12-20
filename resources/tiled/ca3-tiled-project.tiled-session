@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level_2_map.json",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
@@ -15,11 +15,11 @@
             "scaleInEditor": 4
         },
         "level_1_map.json": {
-            "scale": 1,
-            "selectedLayer": 1,
+            "scale": 1.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 238,
-                "y": 404
+                "x": 190.99999999999997,
+                "y": 443.3333333333333
             }
         },
         "level_1_map.tmx": {
@@ -31,27 +31,27 @@
             }
         },
         "level_2_map.json": {
-            "scale": 1.5,
+            "scale": 4,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 191.33333333333334,
-                "y": 484
+                "x": 73.125,
+                "y": 342.75
             }
         },
         "level_3_map.json": {
             "scale": 1.0485625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 232.69952911724383,
+                "x": 232.2226858198724,
                 "y": 404.36311617094833
             }
         },
         "main_menu.json": {
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 2,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 198.66666666666669,
-                "y": 402
+                "x": 165.75,
+                "y": 203.5
             }
         },
         "main_menu.json#cavesofgallet_tiles": {
@@ -69,18 +69,14 @@
     "map.tileHeight": 8,
     "map.tileWidth": 8,
     "openFiles": [
-        "main_menu.json",
-        "level_3_map.json",
-        "level_1_map.json",
-        "level_2_map.json"
     ],
     "project": "ca3-tiled-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "main_menu.json",
-        "level_3_map.json",
-        "level_1_map.json",
         "level_2_map.json",
+        "level_1_map.json",
+        "level_3_map.json",
         "cavesofgallet_tiles.tsx",
         "level_1_map.tmx"
     ],

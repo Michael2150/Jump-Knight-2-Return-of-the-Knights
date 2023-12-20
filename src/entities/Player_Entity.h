@@ -5,7 +5,6 @@
 #ifndef CA3_PLAYER_ENTITY_H
 #define CA3_PLAYER_ENTITY_H
 
-
 #include "../ecm/Entity.h"
 #include "Box2D/Dynamics/b2World.h"
 
