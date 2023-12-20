@@ -1,14 +1,24 @@
 #include "Game.h"
 #include "../components/hello_world_component.h"
+#include "../components/Text_cmp.h"
 
 // Menu Scene
 void MenuScene::Initialize() {
-    PhysicsEngine::SetDebugDrawEnabled(true);
+//    PhysicsEngine::SetDebugDrawEnabled(true);
+
+    auto Title = CreateEntity<Entity>();
+    auto TitleText = Title->CreateComponent<Text_cmp>("Jump Knight");
+    TitleText->setCharacterSize(100);
+    TitleText->setFillColor(sf::Color::White);
+    Title->getTransform()->setPosition({400, 100});
 }
 void MenuScene::setActive(bool isActive) {
     Scene::setActive(isActive);
     if (isActive) {
+        RespawnPlayer();
         GameEngine::getInstance()->PlaySound("resources/Music/Menu_Music.ogg");
+    } else {
+        RespawnPlayer();
     }
 }
 
@@ -21,6 +31,8 @@ void Level1::setActive(bool isActive) {
     if (isActive) {
         RespawnPlayer();
         GameEngine::getInstance()->PlaySound("resources/Music/Level_1_Music.ogg");
+    } else {
+        RespawnPlayer();
     }
 }
 
@@ -33,18 +45,8 @@ void Level2::setActive(bool isActive) {
     if (isActive) {
         RespawnPlayer();
         GameEngine::getInstance()->PlaySound("resources/Music/Level_2_Music.ogg");
-    }
-}
-
-// Level 3
-void Level3::Initialize() {
-    // Other Entities can be set up here:
-}
-void Level3::setActive(bool isActive) {
-    Scene::setActive(isActive);
-    if (isActive) {
+    } else {
         RespawnPlayer();
-        GameEngine::getInstance()->PlaySound("resources/Music/Level_3_Music.ogg");
     }
 }
 
@@ -54,4 +56,10 @@ void EndScene::Initialize() {
 }
 void EndScene::setActive(bool isActive) {
     Scene::setActive(isActive);
+    if (isActive) {
+        RespawnPlayer();
+        GameEngine::getInstance()->PlaySound("resources/Music/Level_2_Music.ogg");
+    } else {
+        RespawnPlayer();
+    }
 }

@@ -54,7 +54,7 @@ public:
         // Update the current animation
         currentAnimation->Update(deltaTime);
 
-        currentAnimation->setPos(parent->getTransform()->getPosition());
+        currentAnimation->setPos(parent->getTransform()->getPosition() + sf::Vector2f(0, -10));
 
         if (flipped) {
             currentAnimation->getSprite().setScale(-parent->getTransform()->getScale().x, parent->getTransform()->getScale().y);

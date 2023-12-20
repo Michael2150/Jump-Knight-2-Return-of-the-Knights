@@ -9,10 +9,10 @@
 
 void Player_Entity::Start() {
     CreateComponent<Text_cmp>("Player Debug");
+    CreateComponent<Player_Door_Check_cmp>();
     CreateComponent<Player_Controller_cmp>(world);
     CreateComponent<Player_Animator_cmp>();
     CreateComponent<Player_Camera_cmp>();
-    CreateComponent<Player_Door_Check_cmp>();
 
     getTransform()->setScale({3.0f, 3.0f});
 

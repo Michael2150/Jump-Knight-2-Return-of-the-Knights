@@ -13,12 +13,16 @@ void Entity::Start() {
 }
 
 void Entity::Update(float deltaTime) {
+    if (!active) return;
+
     for (const auto& component : components) {
         component->Update(deltaTime);
     }
 }
 
 void Entity::Render(sf::RenderWindow* window) {
+    if (!active) return;
+
     for (const auto& component : components) {
         component->Render(window);
     }

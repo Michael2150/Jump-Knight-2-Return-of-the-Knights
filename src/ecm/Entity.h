@@ -22,6 +22,7 @@ using namespace std;
 class Entity {
 private:
     vector<shared_ptr<Component>> components;
+    bool active = true;
 
 protected:
     shared_ptr<Transform_Component> transform;
@@ -35,6 +36,8 @@ public:
     virtual void Start();
     virtual void Update(float deltaTime);
     virtual void Render(sf::RenderWindow* window);
+
+    void setActive(bool isActive) { active = isActive; }
 
     template <class T, typename... Args>
     shared_ptr<T> CreateComponent(Args&&... args) {

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "end_screen.json",
     "expandedProjectPaths": [
         "."
     ],
@@ -14,12 +14,20 @@
             "scaleInDock": 5.5,
             "scaleInEditor": 4
         },
-        "level_1_map.json": {
-            "scale": 1.5,
+        "end_screen.json": {
+            "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 190.99999999999997,
-                "y": 443.3333333333333
+                "x": 160.75,
+                "y": 201.5
+            }
+        },
+        "level_1_map.json": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 212.33333333333337,
+                "y": 547.3333333333333
             }
         },
         "level_1_map.tmx": {
@@ -32,26 +40,26 @@
         },
         "level_2_map.json": {
             "scale": 4,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 73.125,
-                "y": 342.75
+                "x": 118.875,
+                "y": 681.5
             }
         },
         "level_3_map.json": {
-            "scale": 1.0485625,
-            "selectedLayer": 0,
+            "scale": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 232.2226858198724,
-                "y": 404.36311617094833
+                "x": 133.49999999999997,
+                "y": 209.66666666666663
             }
         },
         "main_menu.json": {
             "scale": 2,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 165.75,
-                "y": 203.5
+                "x": 163.75,
+                "y": 72
             }
         },
         "main_menu.json#cavesofgallet_tiles": {
@@ -69,15 +77,21 @@
     "map.tileHeight": 8,
     "map.tileWidth": 8,
     "openFiles": [
+        "level_1_map.json",
+        "main_menu.json",
+        "end_screen.json",
+        "level_2_map.json",
+        "cavesofgallet_tiles.tsx"
     ],
     "project": "ca3-tiled-project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "main_menu.json",
-        "level_2_map.json",
         "level_1_map.json",
-        "level_3_map.json",
+        "main_menu.json",
         "cavesofgallet_tiles.tsx",
+        "level_2_map.json",
+        "end_screen.json",
+        "level_3_map.json",
         "level_1_map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",

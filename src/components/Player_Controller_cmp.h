@@ -21,7 +21,7 @@ private:
     Player_Animator_cmp* animator{};
     Text_cmp* text {};
     float speed = 400.f;
-    float jumpForce = 500.f;
+    float jumpForce = 300.f;
     bool isJumping = false;
 
 public:
@@ -34,7 +34,7 @@ public:
         text->setOrigin({15.0f, 20.0f});
         text->setCharacterSize(12);
 
-        auto playerSize = Vector2f(parent->getTransform()->getScale().x * 27.0f, parent->getTransform()->getScale().y * 40.0f);
+        auto playerSize = Vector2f(parent->getTransform()->getScale().x * 20.0f, parent->getTransform()->getScale().y * 30.0f);
         auto playerPhysicsSize = PhysicsEngine::GraphicsToPhysics(playerSize);
 
         // Create the player
@@ -42,7 +42,7 @@ public:
         playerBodyDef.type = b2_dynamicBody;
         playerBodyDef.bullet = true;
         playerBodyDef.fixedRotation = true;
-        auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform()->getPosition());
+        auto physicsPosition = PhysicsEngine::GraphicsToPhysics(parent->getTransform()->getPosition() );
         playerBodyDef.position.Set(physicsPosition.x, physicsPosition.y);
         this->body = world->CreateBody(&playerBodyDef);
 

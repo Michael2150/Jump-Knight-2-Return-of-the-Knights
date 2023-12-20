@@ -13,8 +13,7 @@
 
 enum class SpecialTile {
     SPAWN = 95,
-    END_BLOCK = 1,
-    BUTTON = 2,
+    END_BLOCK = 96,
 };
 
 

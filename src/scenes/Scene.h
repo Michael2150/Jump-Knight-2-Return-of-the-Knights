@@ -24,8 +24,6 @@ protected:
     shared_ptr<Entity> player;
     shared_ptr<LevelMap> levelMap;
 
-    void RespawnPlayer();
-
 public:
     Scene() = delete;
 
@@ -38,6 +36,8 @@ public:
     void Update(float deltaTime) override;
 
     void Render(sf::RenderWindow *window) override;
+
+    void RespawnPlayer();
 
     b2World* getWorld() {
         if (world == nullptr) {

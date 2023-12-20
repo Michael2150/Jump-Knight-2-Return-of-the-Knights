@@ -10,8 +10,6 @@
 #include "../engine/GameEngine.h"
 
 class Player_Door_Check_cmp : public Component {
-private:
-    int i = 0;
 public:
     void Update(float deltaTime) override {
         Component::Update(deltaTime);
@@ -20,8 +18,18 @@ public:
         auto scene = GameEngine::getInstance()->GetCurrentScene();
         auto special_layer = scene->getLevelMap()->getLayer("special");
         auto isTouchingDoor = special_layer->isOnTile(pos, static_cast<int>(SpecialTile::END_BLOCK));
+
+        auto last_index = 3;
+
         if (isTouchingDoor) {
-            // Do some stuff here:
+            auto current_scene_index = GameEngine::getInstance()->GetCurrentSceneIndex();
+
+            if (current_scene_index == last_index) {
+                GameEngine::getInstance()->SetActiveScene(0);
+                return;
+            }
+
+            GameEngine::getInstance()->SetActiveScene(current_scene_index + 1);
         }
     }
 

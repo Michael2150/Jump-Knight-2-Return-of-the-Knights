@@ -24,13 +24,6 @@ public:
     void setActive(bool isActive) override;
 };
 
-class Level3 : public Scene {
-public:
-    explicit Level3(const string& LevelMapPath, bool requiresPlayer = true) : Scene(LevelMapPath, requiresPlayer) {}
-    void Initialize() override;
-    void setActive(bool isActive) override;
-};
-
 class EndScene : public Scene {
 public:
     explicit EndScene(const string& LevelMapPath, bool requiresPlayer = true) : Scene(LevelMapPath, requiresPlayer) {}

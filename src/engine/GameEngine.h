@@ -65,6 +65,20 @@ public:
         }
     }
     Scene* GetCurrentScene() { return current_scene; }
+    int GetCurrentSceneIndex() {
+        for (int i = 0; i < scenes.size(); i++) {
+            if (scenes[i].get() == current_scene) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    void ResetAllScenes() {
+        for (auto& scene : scenes) {
+            scene->RespawnPlayer();
+        }
+    }
 
     template <class T, typename... Args>
     void CreateScene(Args&&... args) { // Creates and adds a scene of type T to the game engine.

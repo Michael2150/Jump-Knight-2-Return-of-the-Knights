@@ -14,14 +14,13 @@ void GameEngine::Initialize(int width, int height, const std::string &title) {
     this->window = new sf::RenderWindow(sf::VideoMode(width, height), this->title, sf::Style::Default);
     this->window->setFramerateLimit(60);
 
-    GameEngine::sourceTileSet = make_shared<TileSet>("resources/environment/tileset.png", sf::Vector2u(8, 8), sf::Vector2u(8, 12));
+    GameEngine::sourceTileSet = make_shared<TileSet>("resources/environment/tileset.png", sf::Vector2u(8, 8), sf::Vector2u(8, 14));
 
     // Create the scenes here:
-    CreateScene<MenuScene>("resources/tiled/main_menu.json", false); // Scene [0]
+    CreateScene<MenuScene>("resources/tiled/main_menu.json"); // Scene [0]
     CreateScene<Level1>("resources/tiled/level_1_map.json"); // Scene [1]
     CreateScene<Level2>("resources/tiled/level_2_map.json"); // Scene [2]
-    CreateScene<Level3>("resources/tiled/level_3_map.json"); // Scene [3]
-    CreateScene<EndScene>("resources/tiled/main_menu.json", false); // Scene [4]
+    CreateScene<EndScene>("resources/tiled/end_screen.json"); // Scene [3]
 
     cout << "Game engine initialized in " << std::fixed << std::setprecision(6) << timer.restart().asSeconds() << " seconds." << endl;
 }
@@ -59,9 +58,6 @@ void GameEngine::Start() {
                 }
                 if (event.key.code == sf::Keyboard::Num4) {
                     SetActiveScene(3);
-                }
-                if (event.key.code == sf::Keyboard::Num5) {
-                    SetActiveScene(4);
                 }
 
                 // if plus key is pressed, increase the gravity
