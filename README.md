@@ -10,7 +10,7 @@
 - **Physics Simulation**
 - **Custom Game Engine Development**
 
-## Contributers
+## Contributors
 - [Michael Gerber](https://github.com/Michael2150)
 - [Moses Ogwulo](https://github.com/MosesUgwulo)
 
